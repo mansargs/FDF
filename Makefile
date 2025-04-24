@@ -3,7 +3,7 @@ MAKEFLAGS += --no-print-directory
 NAME = fdf
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror # -fsanitize=address
 
 RM = rm -f
 
@@ -12,9 +12,8 @@ GNL = gnl
 
 HEADER = -I$(LIBFT) -I$(GNL) -I.
 
-SRC = $(GNL)/get_next_line.c \
-      $(GNL)/get_next_line_utils.c \
-      fdf.c
+SRC = $(GNL)/get_next_line.c $(GNL)/get_next_line_utils.c \
+		fdf.c validation.c
 
 OBJ = $(SRC:.c=.o)
 
