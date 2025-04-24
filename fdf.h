@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 00:34:02 by lenovo            #+#    #+#             */
-/*   Updated: 2025/04/23 00:56:00 by lenovo           ###   ########.fr       */
+/*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
+/*   Updated: 2025/04/24 09:45:20 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "libft/libft.h"
 
 # define SUCCESS 1

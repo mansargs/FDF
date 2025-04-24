@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 13:31:32 by lenovo            #+#    #+#             */
-/*   Updated: 2025/04/23 01:00:42 by lenovo           ###   ########.fr       */
+/*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
+/*   Updated: 2025/04/24 10:34:28 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,18 @@ static int	valid_file_name(const char *file)
 
 int	main(int argc, char *argv[])
 {
+	int	fd;
 	if (argc != 2 || !valid_file_name(argv[1]))
 	{
-		perror(strerror(EINVAL));
+		ft_putendl_fd("Invalid argument", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	
+	return (EXIT_SUCCESS);
 }
