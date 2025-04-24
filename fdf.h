@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 15:03:27 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:41:23 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,22 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
+typedef struct s_rgb
+{
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+}					t_rgb;
+
 # define SUCCESS 1
 # define FAIL 0
 
 void	safe_exit_from_file(int fd, char *line);
 int		invalid_charachter(const char *str);
 int		valid_file_name(const char *file);
+int		**generate_data_matrix(int col, int row);
+t_rgb	**generate_color_matrix(int col, int row);
+void	deallocate_data_matrix(int	**matrix, int col);
+void	deallocate_color_matrix(t_rgb **color, int col);
 
 #endif

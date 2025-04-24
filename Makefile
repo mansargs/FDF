@@ -13,7 +13,7 @@ GNL = gnl
 HEADER = -I$(LIBFT) -I$(GNL) -I.
 
 SRC = $(GNL)/get_next_line.c $(GNL)/get_next_line_utils.c \
-		fdf.c validation.c
+		fdf.c validation.c matrix.c
 
 OBJ = $(SRC:.c=.o)
 
