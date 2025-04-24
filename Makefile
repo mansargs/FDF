@@ -7,40 +7,42 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
-LIBFT_INC = -I$(LIBFT_DIR)
+LIBFT = libft
+GNL = gnl
 
-HEADER = fdf.h
+HEADER = -I$(LIBFT) -I$(GNL) -I.
 
-SRC = fdf.c
+SRC = $(GNL)/get_next_line.c \
+      $(GNL)/get_next_line_utils.c \
+      fdf.c
+
 OBJ = $(SRC:.c=.o)
 
-all : $(NAME)
+all: $(NAME)
 
-$(LIBFT):
-	@echo "📚 Compiling libft library..."
-	@$(MAKE) -C $(LIBFT_DIR)
-	@$(MAKE) bonus -C $(LIBFT_DIR)
-
-$(NAME) : $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT)/libft.a $(OBJ)
 	@echo "🔗 Linking objects and creating $(NAME)..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT) -lft
 	@echo "✅ Build complete: $(NAME)"
 
-%.o : %.c
-	@echo "⚙️  Compiling ..."
-	@$(CC) $(CFLAGS) $(LIBFT_INC) -c $< -o $@
+$(LIBFT)/libft.a:
+	@echo "📚 Compiling libft library..."
+	@$(MAKE) -C $(LIBFT)
+	@$(MAKE) bonus -C $(LIBFT)
+
+%.o: %.c
+	@echo "⚙️  Compiling $<..."
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:
 	@echo "🧹 Cleaning object files..."
 	@$(RM) $(OBJ)
-	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(MAKE) clean -C $(LIBFT)
 
 fclean: clean
 	@echo "🗑️  Removing binaries..."
 	@$(RM) $(NAME)
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(MAKE) fclean -C $(LIBFT)
 
 re: fclean all
 	@echo "🔄 Rebuilding everything..."

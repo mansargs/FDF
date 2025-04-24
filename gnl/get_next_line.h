@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 12:54:50 by mansargs         ###   ########.fr       */
+/*   Created: 2025/02/18 19:48:49 by mansargs          #+#    #+#             */
+/*   Updated: 2025/04/24 13:00:43 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include <unistd.h>
-# include <stdlib.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 # include <stdio.h>
-# include <string.h>
-# include <errno.h>
+# include <unistd.h>
 # include <fcntl.h>
-# include "libft/libft.h"
-# include "gnl/get_next_line.h"
+# include <stdlib.h>
+# include <limits.h>
 
-
-# define SUCCESS 1
-# define FAIL 0
+size_t	ft_gnl_strlen(const char *str);
+char	*ft_gnl_strchr(const char *str, int c);
+char	*ft_gnl_strjoin(char *s1, const char *s2);
+char	*ft_gnl_substr(const char *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
+void	clear(char **line);
 
 #endif

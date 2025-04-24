@@ -6,13 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:06:39 by mansargs          #+#    #+#             */
-/*   Updated: 2025/01/26 14:39:09 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:44:57 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	count_words(char const *s, char c)
+size_t	count_words(char const *s, char c)
 {
 	int		inside_word;
 	size_t	len;
