@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 19:00:05 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:05:41 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int		invalid_charachter(const char *str);
 int		valid_file_name(const char *file);
 int		**generate_data_matrix(int col, int row);
 t_rgb	**generate_color_matrix(int col, int row);
-void	cleanup_matrix(int	**matrix, t_rgb **color, int col);
+void	cleanup_matrix(int	**matrix, t_rgb **color, int row);
 int	invalid_cell_content(const char *str);
+void	fill_matrix(int	**matrix_data, t_rgb **color, int row, int fd);
+
 
 #endif

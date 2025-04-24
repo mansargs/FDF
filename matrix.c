@@ -6,20 +6,20 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:35:31 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 19:37:42 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:44:16 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	cleanup_matrix(int	**matrix, t_rgb **color, int col)
+void	cleanup_matrix(int	**matrix, t_rgb **color, int row)
 {
 	int	i;
 
 	i = -1;
 	if (matrix)
 	{
-		while (++i < col)
+		while (++i < row)
 		{
 			free(matrix[i]);
 			matrix[i] = NULL;
@@ -29,7 +29,7 @@ void	cleanup_matrix(int	**matrix, t_rgb **color, int col)
 	i = -1;
 	if (color)
 	{
-		while (++i < col)
+		while (++i < row)
 		{
 			free(color[i]);
 			color[i] = NULL;
@@ -44,7 +44,7 @@ int	**generate_data_matrix(int col, int row)
 	int	i;
 	int	j;
 
-	matrix_data = (int **)malloc((sizeof(int *) * col));
+	matrix_data = (int **)malloc((sizeof(int *) * row));
 	if (!matrix_data)
 	{
 		perror("");
@@ -52,9 +52,9 @@ int	**generate_data_matrix(int col, int row)
 	}
 	i = -1;
 	j = -1;
-	while (++i < col)
+	while (++i < row)
 	{
-		matrix_data[i] = ft_calloc(row, sizeof(int));
+		matrix_data[i] = ft_calloc(col, sizeof(int));
 		if (!matrix_data[i])
 		{
 			cleanup_matrix(matrix_data, NULL, i);
@@ -71,12 +71,12 @@ t_rgb	**generate_color_matrix(int col, int row)
 	int		i;
 
 	i = -1;
-	color = (t_rgb **)malloc(sizeof(t_rgb *) * col);
+	color = (t_rgb **)malloc(sizeof(t_rgb *) * row);
 	if (!color)
 		return (NULL);
-	while (++i < col)
+	while (++i < row)
 	{
-		color[i] = (t_rgb *)malloc(sizeof(t_rgb) * row);
+		color[i] = (t_rgb *)malloc(sizeof(t_rgb) * col);
 		if (!color[i])
 		{
 			cleanup_matrix(NULL, color, i);
@@ -111,48 +111,78 @@ void	fill_into_color(t_rgb *color, int idx, const char *hex)
 	color[idx].blue = digit[4] * 16 + digit[5];
 }
 
-int	split_and_fill(char *matrix, t_rgb * color, char *str)
+
+void free_split(char **arr)
 {
-	char	**split;
-	char	**data;
-	int		i;
+	int i;
+
+	if (arr)
+	{
+		i = 0;
+		while (arr[i])
+			free(arr[i++]);
+		free(arr);
+	}
+}
+
+int split_and_fill(int *matrix, t_rgb *color, char *str)
+{
+	char    **split;
+	char    **data;
+	int     i;
 
 	i = -1;
 	split = ft_split(str, ' ');
 	while (split[++i])
 	{
-		if (invalid_cell_content(str))
-			return (free(str), FAIL);
+		if (invalid_cell_content(split[i]))
+		{
+			free(str);
+			free_split(split);  // Free split only once
+			return FAIL;
+		}
 		data = ft_split(split[i], ',');
 		if (!data)
-			return (free(str), FAIL);
+		{
+			free(str);
+			free_split(split);  // Free split only once
+			return FAIL;
+		}
 		matrix[i] = ft_atoi(data[0]);
-		free(data[0]);
 		fill_into_color(color, i, data[1]);
-		free(data[1]);
-		free(data);
-		free(split[i]);
+		free_split(data);  // Free data after use
 	}
-	free(split);
+	free(str);
+	free_split(split);  // Free split only once
+	return SUCCESS;
 }
 
-void	fill_matrix(int	**matrix_data, t_rgb **color, int col, int row, int fd);
+
+void	fill_matrix(int	**matrix_data, t_rgb **color, int row, int fd)
 {
 	char	*str;
+	int		i;
 
 	if (fd == -1)
 	{
-		cleanup_matrix(matrix_data, color, col);
+		cleanup_matrix(matrix_data, color, row);
 		perror("");
 		exit(errno);
 	}
+	i = 0;
 	while (1)
 	{
 		str = get_next_line(fd);
 		if (!str)
 			break;
-
+		str[ft_strlen(str) - 1] = '\0';
+		if (!split_and_fill(matrix_data[i], color[i], str))
+		{
+			cleanup_matrix(matrix_data, color, row);
+			get_next_line(-1);
+			exit(55);
+		}
+		++i;
 	}
-
-
 }
+

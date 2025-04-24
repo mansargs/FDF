@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:18:34 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 13:02:12 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:34:42 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*get_next_line(int fd)
 
 	cut = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+		return (clear(&line), NULL);
 	line = read_line(fd, line);
 	if (!line || (line && line[0] == '\0'))
 		return (clear(&line), NULL);

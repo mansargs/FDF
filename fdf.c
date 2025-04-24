@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 18:19:12 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 21:41:41 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static void	count_columns_rows(int fd, int *row, int *col)
 			break ;
 		if (invalid_charachter(line))
 			safe_exit_from_file(fd, line);
-		++*col;
+		++*row;
 		words = count_words(line, ' ');
-		if (words > *row)
-			*row = words;
+		if (words > *col)
+			*col = words;
 		free(line);
 	}
 	close(fd);
@@ -59,11 +59,13 @@ int	main(int argc, char *argv[])
 	color = generate_color_matrix(col, row);
 	if (!color)
 	{
-		cleanup_matrix(matrix_data, NULL, col);
+		cleanup_matrix(matrix_data, NULL, row);
 		perror("");
 		return (EXIT_FAILURE);
 	}
 	fd = open(argv[1], O_RDONLY);
-	fill_matrix(matrix_data, color, fd);
+	fill_matrix(matrix_data, color, row, fd);
+	printf("yes\n");
+	cleanup_matrix(matrix_data, color, row);
 	return (EXIT_SUCCESS);
 }
