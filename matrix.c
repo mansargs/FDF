@@ -6,13 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:35:31 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 17:44:41 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:15:33 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	deallocate_data_matrix(int	**matrix, int col)
+void	cleanup_matrix(int	**matrix, t_rgb **color, int col)
 {
 	int	i;
 
@@ -26,21 +26,16 @@ void	deallocate_data_matrix(int	**matrix, int col)
 		}
 		free(matrix);
 	}
-}
-
-void	deallocate_color_matrix(t_rgb **color, int col)
-{
-	int	i;
-
-	if (!color)
-		return ;
 	i = -1;
-	while (++i < col)
+	if (color)
 	{
-		free(color[i]);
-		color[i] = NULL;
+		while (++i < col)
+		{
+			free(color[i]);
+			color[i] = NULL;
+		}
+		free(color);
 	}
-	free(color);
 }
 
 int	**generate_data_matrix(int col, int row)
@@ -62,7 +57,7 @@ int	**generate_data_matrix(int col, int row)
 		matrix_data[i] = ft_calloc(row, sizeof(int));
 		if (!matrix_data[i])
 		{
-			deallocate_data_matrix(matrix_data, i);
+			cleanup_matrix(matrix_data, NULL, i);
 			perror("");
 			exit(ENOMEM);
 		}
@@ -84,9 +79,62 @@ t_rgb	**generate_color_matrix(int col, int row)
 		color[i] = (t_rgb *)malloc(sizeof(t_rgb) * row);
 		if (!color[i])
 		{
-			deallocate_color_matrix(color, i);
+			cleanup_matrix(NULL, color, i);
 			return (NULL);
 		}
 	}
 	return (color);
+}
+
+
+void	fill_into_color(t_rgb *color, int idx, const char *hex)
+{
+	int	i;
+	int	hex;
+
+	i = 2;
+	
+
+}
+
+int	split_and_fill(char *matrix, t_rgb * color, char *str)
+{
+	char	**split;
+	char	**data;
+	int		i;
+
+	i = -1;
+	split = ft_split(str, ' ');
+	while (split[++i])
+	{
+		if (invalid_cell_content(str))
+			return (free(str), FAIL);
+		data = ft_split(str, ',');
+		if (!data)
+			return (free(str), FAIL);
+		matrix[i] = ft_atoi(data[0]);
+		fill_into_color(color, i, data[1]);
+	}
+
+}
+
+void	fill_matrix(int	**matrix_data, t_rgb **color, int col, int row, int fd);
+{
+	char	*str;
+
+	if (fd == -1)
+	{
+		cleanup_matrix(matrix_data, color, col);
+		perror("");
+		exit(errno);
+	}
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (!str)
+			break;
+
+	}
+
+
 }

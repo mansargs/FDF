@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 17:40:33 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:19:12 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ int	main(int argc, char *argv[])
 	}
 	fd = open(argv[1], O_RDONLY);
 	count_columns_rows(fd, &row, &col);
-	fd = open(argv[1], O_RDONLY);
 	matrix_data = generate_data_matrix(col, row);
 	color = generate_color_matrix(col, row);
 	if (!color)
 	{
-		deallocate_data_matrix(matrix_data, col);
+		cleanup_matrix(matrix_data, NULL, col);
 		perror("");
 		return (EXIT_FAILURE);
 	}
+	fd = open(argv[1], O_RDONLY);
+	fill_matrix(matrix_data, color, fd);
 	return (EXIT_SUCCESS);
 }
