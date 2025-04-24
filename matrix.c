@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:35:31 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 19:15:33 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:37:42 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,25 @@ t_rgb	**generate_color_matrix(int col, int row)
 void	fill_into_color(t_rgb *color, int idx, const char *hex)
 {
 	int	i;
-	int	hex;
-
-	i = 2;
-	
-
+	int j;
+	int digit[6];
+	if (!hex)
+		return ;
+	i = 1;
+	j = 0;
+	while (hex[++i])
+	{
+		if (ft_isdigit(hex[i]))
+			digit[j] = hex[i] - 48;
+		else if (hex[i] >= 'a' && hex[i] <= 'f')
+			digit[j] = hex[i] - 87;
+		else
+			digit[j] = hex[i] - 55;
+		++j;
+	}
+	color[idx].red = digit[0] * 16 + digit[1];
+	color[idx].green = digit[2] * 16 + digit[3];
+	color[idx].blue = digit[4] * 16 + digit[5];
 }
 
 int	split_and_fill(char *matrix, t_rgb * color, char *str)
@@ -109,13 +123,17 @@ int	split_and_fill(char *matrix, t_rgb * color, char *str)
 	{
 		if (invalid_cell_content(str))
 			return (free(str), FAIL);
-		data = ft_split(str, ',');
+		data = ft_split(split[i], ',');
 		if (!data)
 			return (free(str), FAIL);
 		matrix[i] = ft_atoi(data[0]);
+		free(data[0]);
 		fill_into_color(color, i, data[1]);
+		free(data[1]);
+		free(data);
+		free(split[i]);
 	}
-
+	free(split);
 }
 
 void	fill_matrix(int	**matrix_data, t_rgb **color, int col, int row, int fd);
