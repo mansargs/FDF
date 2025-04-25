@@ -6,13 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:01:11 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 17:09:40 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:33:49 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	cleanup_matrix(int	**matrix, t_rgb **color, int row)
+void	cleanup_matrix(int	**matrix, int **color, int row)
 {
 	int	i;
 

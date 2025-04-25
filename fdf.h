@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 17:21:59 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/25 21:18:12 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,35 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+# include <math.h>
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
-typedef struct s_rgb
+typedef struct s_info
 {
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-}					t_rgb;
+	int	**data;
+	int	**color;
+	int	col;
+	int	row;
+}		t_info;
 
 # define TRUE 1
 # define FALSE 0
 
 // cleaning functions
-void	cleanup_matrix(int	**matrix, t_rgb **color, int row);
+void	cleanup_matrix(int	**matrix, int **color, int row);
 void	free_split(char **arr);
 void	safe_exit_from_file(int fd, char *line);
 
 //matrix
-int		**generate_data_matrix(int col, int row);
-t_rgb	**generate_color_matrix(int col, int row);
-void	fill_matrix(int	**matrix_data, t_rgb **color, int row, int fd);
+void	generate_data_matrix(t_info *matrix);
+int		generate_color_matrix(t_info *matrix);
+void	fill_matrix(int fd, t_info *matrix);
 
 // validation
-int	valid_file_name(const char *file);
-int	invalid_charachter(const char *str);
-int	invalid_cell_content(const char *str);
+int		valid_file_name(const char *file);
+int		invalid_charachter(const char *str);
+int		invalid_cell_content(const char *str);
 
 #endif

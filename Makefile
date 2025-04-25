@@ -21,7 +21,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT)/libft.a $(OBJ)
 	@echo "🔗 Linking objects and creating $(NAME)..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT) -lft
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT) -lft -lm
 	@echo "✅ Build complete: $(NAME)"
 
 $(LIBFT)/libft.a:
