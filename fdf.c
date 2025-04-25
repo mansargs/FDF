@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 21:41:41 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:32:00 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	count_columns_rows(int fd, int *row, int *col)
 	if (fd == -1)
 	{
 		perror("");
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 	*col = 0;
 	*row = 0;
@@ -40,11 +40,31 @@ static void	count_columns_rows(int fd, int *row, int *col)
 	close(fd);
 }
 
+static void	create_matrixes(int fd, int col, int row)
+{
+	int		**matrix_data;
+	t_rgb	**color;
+
+	if (fd == -1)
+	{
+		perror("");
+		exit(errno);
+	}
+	matrix_data = generate_data_matrix(col, row);
+	color = generate_color_matrix(col, row);
+	if (!color)
+	{
+		cleanup_matrix(matrix_data, NULL, row);
+		perror("");
+		exit (errno);
+	}
+	fill_matrix(matrix_data, color, row, fd);
+	
+}
+
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	int		**matrix_data;
-	t_rgb	**color;
 	int		col;
 	int		row;
 
@@ -55,17 +75,7 @@ int	main(int argc, char *argv[])
 	}
 	fd = open(argv[1], O_RDONLY);
 	count_columns_rows(fd, &row, &col);
-	matrix_data = generate_data_matrix(col, row);
-	color = generate_color_matrix(col, row);
-	if (!color)
-	{
-		cleanup_matrix(matrix_data, NULL, row);
-		perror("");
-		return (EXIT_FAILURE);
-	}
 	fd = open(argv[1], O_RDONLY);
-	fill_matrix(matrix_data, color, row, fd);
-	printf("yes\n");
-	cleanup_matrix(matrix_data, color, row);
+	create_matrixes(fd, col, row);
 	return (EXIT_SUCCESS);
 }

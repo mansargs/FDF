@@ -6,11 +6,30 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:40:53 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/24 18:59:47 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:04:45 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static int	valid_hex(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '0' && str[i + 1] == 'x')
+		i += 2;
+	else
+		return (FALSE);
+	while (str[i])
+	{
+		if (!(ft_isdigit(str[i]) || (str[i] >= 'a' && str[i] <= 'f')
+				|| (str[i] >= 'A' && str[i] <= 'F')))
+			return (FALSE);
+		++i;
+	}
+	return (TRUE);
+}
 
 int	valid_file_name(const char *file)
 {
@@ -18,14 +37,14 @@ int	valid_file_name(const char *file)
 
 	start = ft_strlen(file) - 4;
 	if (!ft_strncmp(file + start, ".fdf", 4))
-		return (SUCCESS);
-	return (FAIL);
+		return (TRUE);
+	return (FALSE);
 }
 
 int	invalid_charachter(const char *str)
 {
 	if (!str)
-		return (SUCCESS);
+		return (TRUE);
 	while (*str)
 	{
 		if (!(((*str >= 9 && *str <= 13) || *str == ' ')
@@ -33,44 +52,10 @@ int	invalid_charachter(const char *str)
 				|| (*str >= 'a' && *str <= 'f')
 				|| (*str >= 'A' && *str <= 'F') || *str == '+' || *str == '-'
 				|| *str == ',' || *str == 'x'))
-			return (SUCCESS);
+			return (TRUE);
 		++str;
 	}
-	return (FAIL);
-}
-
-void	safe_exit_from_file(int fd, char *line)
-{
-	free(line);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		free(line);
-	}
-	close(fd);
-	ft_putendl_fd("Invalid characters in file", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
-
-
-int	valid_hex(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '0' && str[i] == 'x')
-		i += 2;
-	else
-		return (FAIL);
-	while (str[i])
-	{
-		if (!(ft_isdigit(str[i]) || (str[i] >= 'a' && str[i] <= 'f') || (str[i] >= 'A' && str[i] <= 'F')))
-			return (FAIL);
-		++i;
-	}
-	return (SUCCESS);
+	return (FALSE);
 }
 
 int	invalid_cell_content(const char *str)
@@ -78,13 +63,13 @@ int	invalid_cell_content(const char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '+'  || str[i] == '-')
+	if (str[i] == '+' || str[i] == '-')
 		++i;
-	while(str[i] != '\0' && str[i] >= 48 && str[i] <= 57 )
+	while (str[i] != '\0' && str[i] >= 48 && str[i] <= 57)
 		++i;
 	if (!str[i])
-		return (FAIL);
+		return (FALSE);
 	if (str[i] == ',' && valid_hex(str + i + 1))
-		return (FAIL);
-	return (SUCCESS);
+		return (FALSE);
+	return (TRUE);
 }
