@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 21:18:12 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:21:15 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 # include <math.h>
 # include <fcntl.h>
+# include "mlx/mlx.h"
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
@@ -31,8 +32,21 @@ typedef struct s_info
 	int	row;
 }		t_info;
 
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_lenght;
+	int		endian;
+}			t_data;
+
 # define TRUE 1
 # define FALSE 0
+# define WIN_HEIGHT 1500
+# define WIN_WIDTH 2000
+# define IMG_HEIGHT 1200
+#define IMG_WIDTH 1700
 
 // cleaning functions
 void	cleanup_matrix(int	**matrix, int **color, int row);
@@ -48,5 +62,7 @@ void	fill_matrix(int fd, t_info *matrix);
 int		valid_file_name(const char *file);
 int		invalid_charachter(const char *str);
 int		invalid_cell_content(const char *str);
+
+void	open_window(t_info *matrix, const char *win_name);
 
 #endif

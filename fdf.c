@@ -6,11 +6,12 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 21:19:36 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:20:23 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <X11/Xlib.h>
 
 static void	count_columns_rows(int fd, t_info *matrix)
 {
@@ -57,7 +58,7 @@ static void	create_matrixes(int fd, t_info *matrix)
 	fill_matrix(fd, matrix);
 }
 
-static void	print_matrix(int **data, int row, int col) {
+void	print_matrix(int **data, int row, int col) {
 	for (int i = 0; i < row; i++) {
 		for (int j = 0; j < col; j++) {
 			printf("%2d ", data[i][j]);
@@ -80,8 +81,6 @@ int	main(int argc, char *argv[])
 	count_columns_rows(fd, &matrix);
 	fd = open(argv[1], O_RDONLY);
 	create_matrixes(fd, &matrix);
-	print_matrix(matrix.data, matrix.row, matrix.col);
-	printf("\n\n");
-	print_matrix(matrix.color, matrix.row, matrix.col);
+	open_window	(matrix, argv[1]);
 	return (EXIT_SUCCESS);
 }
