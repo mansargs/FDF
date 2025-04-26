@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/26 20:03:16 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 02:52:29 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <errno.h>
 # include <math.h>
 # include <fcntl.h>
-# include "mlx/mlx.h"
+# include <mlx.h>
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 

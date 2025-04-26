@@ -34,9 +34,6 @@ $(LIBFT)/libft.a:
 $(MLX)/libmlx.a:
 	@echo "🎨 Compiling mlx library..."
 	@$(MAKE) -C $(MLX) > /dev/null 2>&1
-
-
-
 %.o: %.c
 	@echo "⚙️  Compiling ..."
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
