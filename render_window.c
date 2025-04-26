@@ -6,11 +6,19 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:16:54 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/26 19:33:19 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:05:48 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*pixel;
+
+	pixel = data->addr + (y * data->line_length + x * (data->bpp / 8));
+	*(unsigned int*)pixel = color;
+}
 
 void	create_image(t_info *matrix, void *mlx, void *win)
 {
@@ -23,7 +31,10 @@ void	create_image(t_info *matrix, void *mlx, void *win)
 		cleanup_matrix(matrix->data, matrix->color, matrix->row);
 		exit(EXIT_FAILURE);
 	}
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_lenght, &img.endian);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
+	my_mlx_pixel_put(&img, 5, 5, 0xFF0000);
+	mlx_put_image_to_window(mlx, win, img.img, 0, 0);
+	mlx_loop(mlx);
 }
 
 void	open_window(t_info *matrix, const char *win_name)

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/26 19:20:23 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:54:35 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	main(int argc, char *argv[])
 	count_columns_rows(fd, &matrix);
 	fd = open(argv[1], O_RDONLY);
 	create_matrixes(fd, &matrix);
-	open_window	(matrix, argv[1]);
+	open_window	(&matrix, argv[1]);
 	return (EXIT_SUCCESS);
 }

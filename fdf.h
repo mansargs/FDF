@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/26 19:21:15 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/26 20:03:16 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_data
 	void	*img;
 	char	*addr;
 	int		bpp;
-	int		line_lenght;
+	int		line_length;
 	int		endian;
 }			t_data;
 
