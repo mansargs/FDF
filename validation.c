@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:40:53 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 17:04:45 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:24:16 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static int	valid_hex(const char *str)
+static bool	valid_hex(const char *str)
 {
 	int	i;
 
@@ -20,31 +20,31 @@ static int	valid_hex(const char *str)
 	if (str[i] == '0' && str[i + 1] == 'x')
 		i += 2;
 	else
-		return (FALSE);
+		return (false);
 	while (str[i])
 	{
 		if (!(ft_isdigit(str[i]) || (str[i] >= 'a' && str[i] <= 'f')
 				|| (str[i] >= 'A' && str[i] <= 'F')))
-			return (FALSE);
+			return (false);
 		++i;
 	}
-	return (TRUE);
+	return (true);
 }
 
-int	valid_file_name(const char *file)
+bool	valid_file_name(const char *file)
 {
 	size_t	start;
 
 	start = ft_strlen(file) - 4;
 	if (!ft_strncmp(file + start, ".fdf", 4))
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }
 
-int	invalid_charachter(const char *str)
+bool	invalid_charachter(const char *str)
 {
 	if (!str)
-		return (TRUE);
+		return (true);
 	while (*str)
 	{
 		if (!(((*str >= 9 && *str <= 13) || *str == ' ')
@@ -52,13 +52,13 @@ int	invalid_charachter(const char *str)
 				|| (*str >= 'a' && *str <= 'f')
 				|| (*str >= 'A' && *str <= 'F') || *str == '+' || *str == '-'
 				|| *str == ',' || *str == 'x'))
-			return (TRUE);
+			return (true);
 		++str;
 	}
-	return (FALSE);
+	return (false);
 }
 
-int	invalid_cell_content(const char *str)
+bool	invalid_cell_content(const char *str)
 {
 	int	i;
 
@@ -68,8 +68,8 @@ int	invalid_cell_content(const char *str)
 	while (str[i] != '\0' && str[i] >= 48 && str[i] <= 57)
 		++i;
 	if (!str[i])
-		return (FALSE);
+		return (false);
 	if (str[i] == ',' && valid_hex(str + i + 1))
-		return (FALSE);
-	return (TRUE);
+		return (false);
+	return (true);
 }

@@ -3,46 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   render_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:16:54 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 17:45:11 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:26:35 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_data *img, int x, int y, int color)
+void my_mlx_pixel_put(t_data *img, int x, int y, int color)
 {
-	unsigned int	*pixel;
+	char *dst;
 
-	pixel = (unsigned int*)img->addr + (y * img->line_length + x * (img->bpp / 8));
-	*pixel = color;
+	dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int *)dst = color;
 }
 
-void	bresenham(float x1, float y1, float x2, float y2, t_fdf *data)
-{
-	float	dx;
-	float	dy;
-	float	max;
+void bresenham(int x0, int y0, int x1, int y1, t_fdf *data) {
 
+	x0 *= ZOOM;
 	x1 *= ZOOM;
-	x2 *= ZOOM;
+	y0 *= ZOOM;
 	y1 *= ZOOM;
-	y2 *= ZOOM;
-	dx = x2 - x1;
-	dy = y2 - y1;
-	max = fmax(fabs(dx), fabs(dy));
-	dx /= max;
-	dy /= max;
-	while ((int)(x2 - x1) || (int)(y2 - y1))
-	{
-		my_mlx_pixel_put(data->img, x1, y1, 0xffffff);
-		x1 += dx;
-		y1 += dy;
+
+	int dx = abs(x1 - x0);
+	int dy = abs(y1 - y0);
+
+	int sx = (x0 < x1) ? 1 : -1;
+	int sy = (y0 < y1) ? 1 : -1;
+
+	int err = (dx > dy ? dx : -dy) / 2;
+	int err2;
+
+	while (1) {
+		my_mlx_pixel_put(data->img, x0, y0, 0xffffff);
+
+		if (x0 == x1 && y0 == y1)
+			break;
+
+		err2 = err;
+
+		if (err2 > -dx) {
+			err -= dy;
+			x0 += sx;
+		}
+
+		if (err2 < dy) {
+			err += dx;
+			y0 += sy;
+		}
 	}
 }
-
 
 void	draw(t_fdf *data)
 {
@@ -50,10 +62,10 @@ void	draw(t_fdf *data)
 	int	y;
 
 	y = 0;
-	while (y < data->row)
+	while (y < data->height)
 	{
 		x = 0;
-		while (x < data->col)
+		while (x < data->width)
 		{
 			bresenham(x, y, x, y + 1, data);
 			bresenham(x, y, x + 1, y, data);
@@ -69,13 +81,13 @@ void	create_image(t_fdf *data)
 {
 	t_data img;
 
-	img.img = mlx_new_image(data->mlx, IMG_WIDTH, IMG_HEIGHT);
+	img.img = mlx_new_image(data->mlx, data->width * ZOOM + 1, data->height * ZOOM + 1);
 	if (!img.img)
 	{
 		ft_putendl_fd("Promblem with the creating image", STDERR_FILENO);
 		mlx_destroy_window(data->mlx, data->win);
 		mlx_destroy_display(data->mlx);
-		cleanup_matrix(data->matrix, data->color, data->row);
+		cleanup_matrix(data->matrix, data->color, data->height);
 		exit(EXIT_FAILURE);
 	}
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
@@ -93,7 +105,7 @@ void	open_window(t_fdf *data, const char *win_name)
 	if (!data->mlx)
 	{
 		ft_putendl_fd("Problem with the connecting mlx", STDERR_FILENO);
-		cleanup_matrix(data->matrix, data->color, data->row);
+		cleanup_matrix(data->matrix, data->color, data->height);
 		exit(EXIT_FAILURE);
 	}
 	data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, ft_substr(win_name, 0, ft_strlen(win_name) - 4));
@@ -101,7 +113,7 @@ void	open_window(t_fdf *data, const char *win_name)
 	{
 		ft_putendl_fd("Problem with the opening window", STDERR_FILENO);
 		mlx_destroy_display(data->mlx);
-		cleanup_matrix(data->matrix, data->color, data->row);
+		cleanup_matrix(data->matrix, data->color, data->height);
 		exit(EXIT_FAILURE);
 	}
 	create_image(data);

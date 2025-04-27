@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 18:04:33 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:14:16 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 
 # include <unistd.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -46,21 +47,16 @@ typedef struct s_fdf
 {
 	int		**matrix;
 	int		**color;
-	int		col;
-	int		row;
+	int		height;
+	int		width;
 	void	*mlx;
 	void	*win;
 	t_data	*img;
 }		t_fdf;
 
 
-
-# define TRUE 1
-# define FALSE 0
-# define WIN_HEIGHT 1000
-# define WIN_WIDTH 1000
-# define IMG_HEIGHT 1200
-# define IMG_WIDTH 1700
+# define WIN_HEIGHT 700
+# define WIN_WIDTH 700
 # define ZOOM 20
 
 // cleaning functions
@@ -70,13 +66,13 @@ void	safe_exit_from_file(int fd, char *line);
 
 //matrix
 void	generate_data_matrix(t_fdf *data);
-int		generate_color_matrix(t_fdf *data);
+bool		generate_color_matrix(t_fdf *data);
 void	fill_matrix(int fd, t_fdf *data);
 
 // validation
-int		valid_file_name(const char *file);
-int		invalid_charachter(const char *str);
-int		invalid_cell_content(const char *str);
+bool		valid_file_name(const char *file);
+bool	invalid_charachter(const char *str);
+bool	invalid_cell_content(const char *str);
 
 void	open_window(t_fdf *data, const char *win_name);
 

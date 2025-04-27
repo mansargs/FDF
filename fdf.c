@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 16:06:37 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:07:21 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	count_columns_rows(int fd, t_fdf *data)
 		perror("");
 		exit(errno);
 	}
-	data->col = 0;
-	data->row = 0;
+	data->width = 0;
+	data->height = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -31,10 +31,10 @@ static void	count_columns_rows(int fd, t_fdf *data)
 			break ;
 		if (invalid_charachter(line))
 			safe_exit_from_file(fd, line);
-		++data->row;
+		++data->height;
 		words = count_words(line, ' ');
-		if (words > data->col)
-			data->col = words;
+		if (words > data->width)
+			data->width = words;
 		free(line);
 	}
 	close(fd);
@@ -50,7 +50,7 @@ static void	create_matrixes(int fd, t_fdf *data)
 	generate_data_matrix(data);
 	if (!generate_color_matrix(data))
 	{
-		cleanup_matrix(data->matrix, NULL, data->row);
+		cleanup_matrix(data->matrix, NULL, data->height);
 		perror("");
 		exit (errno);
 	}
