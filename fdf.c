@@ -6,14 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/26 19:54:35 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 16:06:37 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <X11/Xlib.h>
 
-static void	count_columns_rows(int fd, t_info *matrix)
+static void	count_columns_rows(int fd, t_fdf *data)
 {
 	char	*line;
 	int		words;
@@ -23,8 +22,8 @@ static void	count_columns_rows(int fd, t_info *matrix)
 		perror("");
 		exit(errno);
 	}
-	matrix->col = 0;
-	matrix->row = 0;
+	data->col = 0;
+	data->row = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -32,45 +31,36 @@ static void	count_columns_rows(int fd, t_info *matrix)
 			break ;
 		if (invalid_charachter(line))
 			safe_exit_from_file(fd, line);
-		++matrix->row;
+		++data->row;
 		words = count_words(line, ' ');
-		if (words > matrix->col)
-			matrix->col = words;
+		if (words > data->col)
+			data->col = words;
 		free(line);
 	}
 	close(fd);
 }
 
-static void	create_matrixes(int fd, t_info *matrix)
+static void	create_matrixes(int fd, t_fdf *data)
 {
 	if (fd == -1)
 	{
 		perror("");
 		exit(errno);
 	}
-	generate_data_matrix(matrix);
-	if (!generate_color_matrix(matrix))
+	generate_data_matrix(data);
+	if (!generate_color_matrix(data))
 	{
-		cleanup_matrix(matrix->data, NULL, matrix->row);
+		cleanup_matrix(data->matrix, NULL, data->row);
 		perror("");
 		exit (errno);
 	}
-	fill_matrix(fd, matrix);
-}
-
-void	print_matrix(int **data, int row, int col) {
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < col; j++) {
-			printf("%2d ", data[i][j]);
-		}
-		printf("\n");
-	}
+	fill_matrix(fd, data);
 }
 
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	t_info	matrix;
+	t_fdf	data;
 
 	if (argc != 2 || !valid_file_name(argv[1]))
 	{
@@ -78,9 +68,9 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	fd = open(argv[1], O_RDONLY);
-	count_columns_rows(fd, &matrix);
+	count_columns_rows(fd, &data);
 	fd = open(argv[1], O_RDONLY);
-	create_matrixes(fd, &matrix);
-	open_window	(&matrix, argv[1]);
+	create_matrixes(fd, &data);
+	open_window	(&data, argv[1]);
 	return (EXIT_SUCCESS);
 }

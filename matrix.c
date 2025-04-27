@@ -6,49 +6,49 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:35:31 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 21:18:32 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 16:03:07 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	generate_data_matrix(t_info *matrix)
+void	generate_data_matrix(t_fdf *data)
 {
 	int	i;
 
-	matrix->data = (int **)malloc((sizeof(int *) * matrix->row));
-	if (!matrix->data)
+	data->matrix = (int **)malloc((sizeof(int *) * data->row));
+	if (!data->matrix)
 	{
 		perror("");
 		exit(errno);
 	}
 	i = -1;
-	while (++i < matrix->row)
+	while (++i < data->row)
 	{
-		matrix->data[i] = ft_calloc(matrix->col, sizeof(int));
-		if (!matrix->data[i])
+		data->matrix[i] = ft_calloc(data->col, sizeof(int));
+		if (!data->matrix[i])
 		{
-			cleanup_matrix(matrix->data, NULL, i);
+			cleanup_matrix(data->matrix, NULL, i);
 			perror("");
 			exit(errno);
 		}
 	}
 }
 
-int	generate_color_matrix(t_info *matrix)
+int	generate_color_matrix(t_fdf *data)
 {
 	int		i;
 
 	i = -1;
-	matrix->color = (int **)malloc(sizeof(int *) * matrix->row);
-	if (!matrix->color)
+	data->color = (int **)malloc(sizeof(int *) * data->row);
+	if (!data->color)
 		return (FALSE);
-	while (++i < matrix->row)
+	while (++i < data->row)
 	{
-		matrix->color[i] = ft_calloc(matrix->col, sizeof(int));
-		if (!matrix->color[i])
+		data->color[i] = ft_calloc(data->col, sizeof(int));
+		if (!data->color[i])
 		{
-			cleanup_matrix(NULL, matrix->color, i);
+			cleanup_matrix(NULL, data->color, i);
 			return (FALSE);
 		}
 	}
@@ -99,7 +99,7 @@ static int	split_and_fill(int *data, int *color, char *str)
 	return (free(str), free_split(split), TRUE);
 }
 
-void	fill_matrix(int fd, t_info *matrix)
+void	fill_matrix(int fd, t_fdf *data)
 {
 	char	*str;
 	int		i;
@@ -111,9 +111,9 @@ void	fill_matrix(int fd, t_info *matrix)
 		if (!str)
 			break ;
 		str[ft_strlen(str) - 1] = '\0';
-		if (!split_and_fill(matrix->data[i], matrix->color[i], str))
+		if (!split_and_fill(data->matrix[i], data->color[i], str))
 		{
-			cleanup_matrix(matrix->data, matrix->color, matrix->row);
+			cleanup_matrix(data->matrix, data->color, data->row);
 			get_next_line(-1);
 			ft_putendl_fd("Problem with the memory or invalid content",
 				STDERR_FILENO);

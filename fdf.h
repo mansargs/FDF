@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 02:52:29 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/27 15:59:58 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
-typedef struct s_info
+typedef struct s_fdf
 {
-	int	**data;
-	int	**color;
-	int	col;
-	int	row;
-}		t_info;
+	void	*img;
+	int		**matrix;
+	int		**color;
+	int		col;
+	int		row;
+	void	*mlx;
+	void	*win;
+	t_data	*img;
+}		t_fdf;
 
 typedef struct s_data
 {
@@ -46,7 +50,7 @@ typedef struct s_data
 # define WIN_HEIGHT 1500
 # define WIN_WIDTH 2000
 # define IMG_HEIGHT 1200
-#define IMG_WIDTH 1700
+# define IMG_WIDTH 1700
 
 // cleaning functions
 void	cleanup_matrix(int	**matrix, int **color, int row);
@@ -54,15 +58,15 @@ void	free_split(char **arr);
 void	safe_exit_from_file(int fd, char *line);
 
 //matrix
-void	generate_data_matrix(t_info *matrix);
-int		generate_color_matrix(t_info *matrix);
-void	fill_matrix(int fd, t_info *matrix);
+void	generate_data_matrix(t_fdf *data);
+int		generate_color_matrix(t_fdf *data);
+void	fill_matrix(int fd, t_fdf *data);
 
 // validation
 int		valid_file_name(const char *file);
 int		invalid_charachter(const char *str);
 int		invalid_cell_content(const char *str);
 
-void	open_window(t_info *matrix, const char *win_name);
+void	open_window(t_fdf *data, const char *win_name);
 
 #endif
