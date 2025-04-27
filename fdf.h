@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 15:59:58 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:04:33 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,6 @@
 # include "libft/libft.h"
 # include "gnl/get_next_line.h"
 
-typedef struct s_fdf
-{
-	void	*img;
-	int		**matrix;
-	int		**color;
-	int		col;
-	int		row;
-	void	*mlx;
-	void	*win;
-	t_data	*img;
-}		t_fdf;
-
 typedef struct s_data
 {
 	void	*img;
@@ -45,12 +33,35 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
+typedef struct
+{
+	int	x;
+	int	y;
+	int	z;
+	int	color;
+}		t_point;
+
+
+typedef struct s_fdf
+{
+	int		**matrix;
+	int		**color;
+	int		col;
+	int		row;
+	void	*mlx;
+	void	*win;
+	t_data	*img;
+}		t_fdf;
+
+
+
 # define TRUE 1
 # define FALSE 0
-# define WIN_HEIGHT 1500
-# define WIN_WIDTH 2000
+# define WIN_HEIGHT 1000
+# define WIN_WIDTH 1000
 # define IMG_HEIGHT 1200
 # define IMG_WIDTH 1700
+# define ZOOM 20
 
 // cleaning functions
 void	cleanup_matrix(int	**matrix, int **color, int row);

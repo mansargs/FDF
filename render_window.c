@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 18:16:54 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 16:18:24 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:45:11 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,47 @@ void	my_mlx_pixel_put(t_data *img, int x, int y, int color)
 
 void	bresenham(float x1, float y1, float x2, float y2, t_fdf *data)
 {
-	int	dx;
-	int	dy;
-	int	p;
+	float	dx;
+	float	dy;
+	float	max;
 
+	x1 *= ZOOM;
+	x2 *= ZOOM;
+	y1 *= ZOOM;
+	y2 *= ZOOM;
 	dx = x2 - x1;
 	dy = y2 - y1;
-	p = 2 * dy - dx;
-	while (x1 <= x2)
+	max = fmax(fabs(dx), fabs(dy));
+	dx /= max;
+	dy /= max;
+	while ((int)(x2 - x1) || (int)(y2 - y1))
 	{
-		my_mlx_pixel_put(data->img, x1, y1, 0xFF0000);
-		if (p >= 0)
-		{
-			y1 += 0.5;
-			p -= 2 * dx;
-		}
-		if (x1 != x2)
-			x1 += 0.5;
-		p += 2 * dy;
-		if (y1 > y2)
-			break;
+		my_mlx_pixel_put(data->img, x1, y1, 0xffffff);
+		x1 += dx;
+		y1 += dy;
 	}
+}
+
+
+void	draw(t_fdf *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data->row)
+	{
+		x = 0;
+		while (x < data->col)
+		{
+			bresenham(x, y, x, y + 1, data);
+			bresenham(x, y, x + 1, y, data);
+			++x;
+		}
+		++y;
+	}
+	bresenham(x, 0, x, y, data);
+	bresenham(0, y, x, y, data);
 }
 
 void	create_image(t_fdf *data)
@@ -60,8 +80,8 @@ void	create_image(t_fdf *data)
 	}
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 	data->img = &img;
-	bresenham(10, 70, 70, 300, data);
-	mlx_put_image_to_window(data->mlx, data->win, img.img, 100, 100);
+	draw(data);
+	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
 	mlx_loop(data->mlx);
 }
 
