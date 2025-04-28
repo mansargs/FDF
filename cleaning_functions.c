@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:01:11 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/25 20:33:49 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/27 23:52:19 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	cleanup_matrix(int	**matrix, int **color, int row)
+void	cleanup_matrix(t_point	**matrix, int row)
 {
 	int	i;
 
@@ -25,16 +25,6 @@ void	cleanup_matrix(int	**matrix, int **color, int row)
 			matrix[i] = NULL;
 		}
 		free(matrix);
-	}
-	i = -1;
-	if (color)
-	{
-		while (++i < row)
-		{
-			free(color[i]);
-			color[i] = NULL;
-		}
-		free(color);
 	}
 }
 

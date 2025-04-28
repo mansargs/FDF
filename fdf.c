@@ -6,13 +6,13 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 22:07:21 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/28 12:05:50 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	count_columns_rows(int fd, t_fdf *data)
+static void	count_columns_rows(int fd, fdf *data)
 {
 	char	*line;
 	int		words;
@@ -29,7 +29,7 @@ static void	count_columns_rows(int fd, t_fdf *data)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (invalid_charachter(line))
+		if (invalid_character(line))
 			safe_exit_from_file(fd, line);
 		++data->height;
 		words = count_words(line, ' ');
@@ -40,33 +40,29 @@ static void	count_columns_rows(int fd, t_fdf *data)
 	close(fd);
 }
 
-static void	create_matrixes(int fd, t_fdf *data)
+static void	create_matrixes(int fd, fdf *data)
 {
 	if (fd == -1)
 	{
 		perror("");
 		exit(errno);
 	}
-	generate_data_matrix(data);
-	if (!generate_color_matrix(data))
-	{
-		cleanup_matrix(data->matrix, NULL, data->height);
-		perror("");
-		exit (errno);
-	}
+	generate_point_matrix(data);
 	fill_matrix(fd, data);
 }
 
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	t_fdf	data;
+	fdf	data;
+
 
 	if (argc != 2 || !valid_file_name(argv[1]))
 	{
 		ft_putendl_fd("Invalid argument", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	ft_memset(&data, 0, sizeof(fdf));
 	fd = open(argv[1], O_RDONLY);
 	count_columns_rows(fd, &data);
 	fd = open(argv[1], O_RDONLY);

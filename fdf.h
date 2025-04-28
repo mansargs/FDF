@@ -6,7 +6,7 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 22:14:16 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/28 13:42:51 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,15 @@ typedef struct
 }		t_point;
 
 
-typedef struct s_fdf
+typedef struct
 {
-	int		**matrix;
-	int		**color;
-	int		height;
-	int		width;
-	void	*mlx;
-	void	*win;
-	t_data	*img;
-}		t_fdf;
+	t_point		**matrix;
+	int			height;
+	int			width;
+	void		*mlx;
+	void		*win;
+	t_data		*img;
+}		fdf;
 
 
 # define WIN_HEIGHT 700
@@ -60,20 +59,19 @@ typedef struct s_fdf
 # define ZOOM 20
 
 // cleaning functions
-void	cleanup_matrix(int	**matrix, int **color, int row);
+void	cleanup_matrix(t_point	**matrix, int row);
 void	free_split(char **arr);
 void	safe_exit_from_file(int fd, char *line);
 
 //matrix
-void	generate_data_matrix(t_fdf *data);
-bool		generate_color_matrix(t_fdf *data);
-void	fill_matrix(int fd, t_fdf *data);
+void	generate_point_matrix(fdf *data);
+void	fill_matrix(int fd, fdf *data);
 
 // validation
-bool		valid_file_name(const char *file);
-bool	invalid_charachter(const char *str);
+bool	valid_file_name(const char *file);
+bool	invalid_character(const char *str);
 bool	invalid_cell_content(const char *str);
 
-void	open_window(t_fdf *data, const char *win_name);
+void	open_window(fdf *data, const char *win_name);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:40:53 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 22:24:16 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/28 12:03:38 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,24 @@ static bool	valid_hex(const char *str)
 
 bool	valid_file_name(const char *file)
 {
-	size_t	start;
+	size_t	len;
 
-	start = ft_strlen(file) - 4;
-	if (!ft_strncmp(file + start, ".fdf", 4))
+	len = ft_strlen(file);
+	if (len < 4)
+		return (false);
+	if (!ft_strncmp(file + len - 4, ".fdf", 4))
 		return (true);
 	return (false);
 }
 
-bool	invalid_charachter(const char *str)
+bool	invalid_character(const char *str)
 {
 	if (!str)
 		return (true);
 	while (*str)
 	{
 		if (!(((*str >= 9 && *str <= 13) || *str == ' ')
-				|| (*str >= 48 && *str <= 57)
+				|| ft_isdigit(*str)
 				|| (*str >= 'a' && *str <= 'f')
 				|| (*str >= 'A' && *str <= 'F') || *str == '+' || *str == '-'
 				|| *str == ',' || *str == 'x'))
@@ -65,7 +67,7 @@ bool	invalid_cell_content(const char *str)
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		++i;
-	while (str[i] != '\0' && str[i] >= 48 && str[i] <= 57)
+	while (ft_isdigit(str[i]))
 		++i;
 	if (!str[i])
 		return (false);
