@@ -6,13 +6,13 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 17:01:11 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/27 23:52:19 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 00:59:54 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	cleanup_matrix(t_point	**matrix, int row)
+void	cleanup_matrix(z_clr	**matrix, int row)
 {
 	int	i;
 

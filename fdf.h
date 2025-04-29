@@ -6,7 +6,7 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/28 13:42:51 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 01:38:59 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,26 @@ typedef struct s_data
 
 typedef struct
 {
+	int	z;
+	int	color;
+}		z_clr;
+
+typedef struct
+{
 	int	x;
 	int	y;
 	int	z;
 	int	color;
-}		t_point;
+}			t_point;
+
 
 
 typedef struct
 {
-	t_point		**matrix;
+	z_clr		**matrix;
 	int			height;
 	int			width;
+	int			step;
 	void		*mlx;
 	void		*win;
 	t_data		*img;
@@ -58,7 +66,7 @@ typedef struct
 # define WIN_WIDTH 1500
 
 // cleaning functions
-void	cleanup_matrix(t_point	**matrix, int row);
+void	cleanup_matrix(z_clr	**matrix, int row);
 void	free_split(char **arr);
 void	safe_exit_from_file(int fd, char *line);
 

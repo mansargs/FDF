@@ -15,7 +15,7 @@
 void	generate_point_matrix(fdf *data)
 {
 	int	i;
-	data->matrix = (t_point **)malloc(sizeof(t_point *) * data->height);
+	data->matrix = (z_clr**)malloc(sizeof(z_clr*) * data->height);
 	if (!data->matrix)
 	{
 		perror("");
@@ -24,7 +24,7 @@ void	generate_point_matrix(fdf *data)
 	i = -1;
 	while (++i < data->height)
 	{
-		data->matrix[i] = ft_calloc(data->width, sizeof(t_point));
+		data->matrix[i] = ft_calloc(data->width, sizeof(z_clr));
 		if (!data->matrix[i])
 		{
 			cleanup_matrix(data->matrix, i);
@@ -53,7 +53,7 @@ static void	fill_into_color(int	*color, const char *hex)
 		*color += digit << (4 * (len - i));
 	}
 }
-static bool	split_and_fill(t_point *data, char *str)
+static bool	split_and_fill(z_clr*data, char *str)
 {
 	char	**split;
 	char	**divide;
@@ -72,29 +72,6 @@ static bool	split_and_fill(t_point *data, char *str)
 		free_split(divide);
 	}
 	return (free(str), free_split(split), true);
-}
-
-void complete_x_y(fdf *data)
-{
-	int	i;
-	int	j;
-	int	step;
-	int	start_x;
-	int	start_y;
-
-	step = fmin((WIN_WIDTH / data->width) * 0.5, (WIN_HEIGHT / data->height) * 0.5);
-	start_x = (WIN_WIDTH - (data->width - 1) * step) / 3;
-	start_y = (WIN_HEIGHT - (data->height - 1) * step) / 3;
-	i = -1;
-	while (++i < data->height)
-	{
-		j = -1;
-		while (++j < data->width)
-		{
-			data->matrix[i][j].x = start_x + step * j;
-			data->matrix[i][j].y = start_y + step * i;
-		}
-	}
 }
 
 void	fill_matrix(int fd, fdf *data)
@@ -121,5 +98,4 @@ void	fill_matrix(int fd, fdf *data)
 		}
 		++i;
 	}
-	complete_x_y(data);
 }
