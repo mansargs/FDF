@@ -10,92 +10,92 @@
 	/*                                                                            */
 	/* ************************************************************************** */
 
-	#include "fdf.h"
+#include "fdf.h"
 
-	void	generate_point_matrix(fdf *data)
+void	generate_point_matrix(fdf *data)
+{
+	int	i;
+	data->matrix = (t_point **)malloc(sizeof(t_point *) * data->height);
+	if (!data->matrix)
 	{
-		int	i;
-
-		data->matrix = (t_point **)malloc(sizeof(t_point *) * data->height);
-		if (!data->matrix)
+		perror("");
+		exit(errno);
+	}
+	i = -1;
+	while (++i < data->height)
+	{
+		data->matrix[i] = ft_calloc(data->width, sizeof(t_point));
+		if (!data->matrix[i])
 		{
+			cleanup_matrix(data->matrix, i);
 			perror("");
 			exit(errno);
 		}
-		i = -1;
-		while (++i < data->height)
-		{
-			data->matrix[i] = ft_calloc(data->width, sizeof(t_point));
-			if (!data->matrix[i])
-			{
-				cleanup_matrix(data->matrix, i);
-				perror("");
-				exit(errno);
-			}
-		}
 	}
-
-	static void	fill_into_color(int	*color, const char *hex)
+}
+static void	fill_into_color(int	*color, const char *hex)
+{
+	int	i;
+	int	digit;
+	int	len;
+	if (!hex)
+		return ;
+	i = 1;
+	len = 7;
+	while (hex[++i])
 	{
-		int	i;
-		int	digit;
-		int	len;
-
-		if (!hex)
-			return ;
-		i = 1;
-		len = 7;
-		while (hex[++i])
-		{
-			if (ft_isdigit(hex[i]))
-				digit = hex[i] - '0';
-			else if (hex[i] >= 'a' && hex[i] <= 'f')
-				digit = hex[i] - 'a' + 10;
-			else
-				digit = hex[i] - 'A' + 10;
-			*color += digit << (4 * (len - i));
-		}
+		if (ft_isdigit(hex[i]))
+			digit = hex[i] - '0';
+		else if (hex[i] >= 'a' && hex[i] <= 'f')
+			digit = hex[i] - 'a' + 10;
+		else
+			digit = hex[i] - 'A' + 10;
+		*color += digit << (4 * (len - i));
 	}
-
-	static bool	split_and_fill(t_point *data, char *str)
+}
+static bool	split_and_fill(t_point *data, char *str)
+{
+	char	**split;
+	char	**divide;
+	int		i;
+	i = -1;
+	split = ft_split(str, ' ');
+	while (split[++i])
 	{
-		char	**split;
-		char	**divide;
-		int		i;
-
-		i = -1;
-		split = ft_split(str, ' ');
-		while (split[++i])
-		{
-			if (invalid_cell_content(split[i]))
-				return (free(str), free_split(split), false);
-			divide = ft_split(split[i], ',');
-			if (!divide)
-				return (free(str), free_split(split), false);
-			data[i].z = ft_atoi(divide[0]);
-			fill_into_color(&data[i].color, divide[1]);
-			free_split(divide);
-		}
-		return (free(str), free_split(split), true);
+		if (invalid_cell_content(split[i]))
+			return (free(str), free_split(split), false);
+		divide = ft_split(split[i], ',');
+		if (!divide)
+			return (free(str), free_split(split), false);
+		data[i].z = ft_atoi(divide[0]);
+		fill_into_color(&data[i].color, divide[1]);
+		free_split(divide);
 	}
+	return (free(str), free_split(split), true);
+}
 
-	void	complete_x_y(fdf *data)
+void complete_x_y(fdf *data)
+{
+	int	i;
+	int	j;
+	int	step;
+	int	start_x;
+	int	start_y;
+
+	step = fmin((WIN_WIDTH / data->width) * 0.5, (WIN_HEIGHT / data->height) * 0.5);
+	start_x = (WIN_WIDTH - (data->width - 1) * step) / 3;
+	start_y = (WIN_HEIGHT - (data->height - 1) * step) / 3;
+	i = -1;
+	while (++i < data->height)
 	{
-		int	i;
-		int	j;
-
-		i = -1;
-		while (++i < data->height)
+		j = -1;
+		while (++j < data->width)
 		{
-			j = -1;
-			while (++j < data->width)
-			{
-				data->matrix[i][j].x = j;
-				data->matrix[i][j].y = i;
-			}
+			data->matrix[i][j].x = start_x + step * j;
+			data->matrix[i][j].y = start_y + step * i;
 		}
 	}
-
+}
 
 void	fill_matrix(int fd, fdf *data)
 {

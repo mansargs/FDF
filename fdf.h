@@ -54,9 +54,8 @@ typedef struct
 }		fdf;
 
 
-# define WIN_HEIGHT 700
-# define WIN_WIDTH 700
-# define ZOOM 20
+# define WIN_HEIGHT 1200
+# define WIN_WIDTH 1500
 
 // cleaning functions
 void	cleanup_matrix(t_point	**matrix, int row);
