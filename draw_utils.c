@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 21:46:28 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 02:28:19 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,28 @@ int	interpolate(int color1, int color2, int cur_step, int tot_step)
 
 void	bresenham(t_point *start, t_point *end, t_fdf *data)
 {
-	int dx = abs(end->x - start->x);
-	int dy = abs(end->y - start->y);
-	int sx = (start->x < end->x) ? 1 : -1;
-	int sy = (start->y < end->y) ? 1 : -1;
-	int err = dx - dy;
-	int step = 0;
-	int max_step = fmax(dx, dy);
+	int	dif_and_dp[4];
+	int	step[4];
 
+	init_bresenham_data(dif_and_dp, step, start, end);
 	while (1)
 	{
-		start->color = interpolate(start->color, end->color, step, max_step);
+		start->color = interpolate(start->color, end->color, step[2], step[3]);
 		put_pixel_to_image(data, start);
 		if (start->x == end->x && start->y == end->y)
-			break;
-		int e2 = 2 * err;
-		if (e2 > -dy)
+			break ;
+		dif_and_dp[3] = 2 * dif_and_dp[2];
+		if (dif_and_dp[3] > -dif_and_dp[1])
 		{
-			err -= dy;
-			start->x += sx;
+			dif_and_dp[2] -= dif_and_dp[1];
+			start->x += step[0];
 		}
-		if (e2 < dx)
+		if (dif_and_dp[3] < dif_and_dp[0])
 		{
-			err += dx;
-			start->y += sy;
+			dif_and_dp[2] += dif_and_dp[0];
+			start->y += step[1];
 		}
-		++step;
+		++step[2];
 	}
 }
 
