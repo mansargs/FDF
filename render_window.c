@@ -24,7 +24,7 @@ void put_pixel_to_image(fdf *data, t_point *start)
 
 void	bresenham(t_point *start, t_point *end, fdf *data)
 {
-	int	dif[3];
+	int	dif[4];
 	int	step[2];
 
 	dif[0] = abs(end->x - start->x);
@@ -37,17 +37,32 @@ void	bresenham(t_point *start, t_point *end, fdf *data)
 		put_pixel_to_image(data, start);
 		if (start->x == end->x && start->y == end->y)
 			break;
-		if (2 * dif[2] > -dif[1])
+		dif[3] = 2 * dif[2];
+		if (dif[3] > -dif[1])
 		{
 			dif[2] -= dif[1];
 			start->x += step[0];
 		}
-		if (2 * dif[2] < dif[0])
+		if (dif[3] < dif[0])
 		{
 			dif[2] += dif[0];
 			start->y += step[1];
 		}
 	}
+}
+
+void	isometric(t_point *start, t_point *end, fdf *data)
+{
+	int	prev_x;
+
+	prev_x = start->x;
+	start->x = (start->x - start->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
+	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + WIN_HEIGHT / 2;
+	prev_x = end->x;
+	end->x = (end->x - end->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
+	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + WIN_HEIGHT / 2;
+	printf("start----->(%d, %d)\nend----------->(%d, %d)\n\n", start->x, start->y, end->x, end->y);
+	bresenham(start, end, data);
 }
 
 void	initialize_points(int y, int x, fdf *data, int vertical)
@@ -73,7 +88,7 @@ void	initialize_points(int y, int x, fdf *data, int vertical)
 		end.z = data->matrix[y][x + 1].z;
 		end.color = data->matrix[y][x + 1].color;
 	}
-	bresenham(&start, &end, data);
+	isometric(&start, &end, data);
 }
 
 void	draw_matrix(fdf *data)

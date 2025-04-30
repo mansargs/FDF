@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 13:46:58 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:55:39 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	create_matrixes(int fd, fdf *data)
 		perror("");
 		exit(errno);
 	}
-	data->step = 50;
+	data->step = 40;
 	generate_point_matrix(data);
 	fill_matrix(fd, data);
 }
