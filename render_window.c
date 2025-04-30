@@ -10,24 +10,47 @@
 	/*                                                                            */
 	/* ************************************************************************** */
 
-	#include "fdf.h"
+#include "fdf.h"
 
-void put_pixel_to_image(fdf *data, int x, int y, int color)
+void put_pixel_to_image(fdf *data, t_point *start)
 {
 	char *pixel;
 
-	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
+	if (start->x < 0 || start->y < 0 || start->x >= WIN_WIDTH || start->y >= WIN_HEIGHT)
 		return ;
-	pixel = (data->img->addr + (y * data->img->line_length + x * (data->img->bpp / 8)));
-	*(unsigned int *)pixel = color;
+	pixel = (data->img.addr + (start->y * data->img.line_length + start->x * (data->img.bpp / 8)));
+	*(unsigned int *)pixel = 0xffffff;
 }
 
-void	bresenham(t_point *start, t_point *end)
+void	bresenham(t_point *start, t_point *end, fdf *data)
 {
 	int	dif[3];
+	int	step[2];
+
+	dif[0] = abs(end->x - start->x);
+	dif[1] = abs(end->y - start->y);
+	step[0] = 1 - 2 * (start->x > end->x);
+	step[1] = 1 - 2 * (start->y > end->y);
+	dif[2] = dif[0] - dif[1];
+	while (1)
+	{
+		put_pixel_to_image(data, start);
+		if (start->x == end->x && start->y == end->y)
+			break;
+		if (2 * dif[2] > -dif[1])
+		{
+			dif[2] -= dif[1];
+			start->x += step[0];
+		}
+		if (2 * dif[2] < dif[0])
+		{
+			dif[2] += dif[0];
+			start->y += step[1];
+		}
+	}
 }
 
-void	initialize_points(int y, int x, const fdf *data, int vertical)
+void	initialize_points(int y, int x, fdf *data, int vertical)
 {
 	t_point	start;
 	t_point	end;
@@ -50,35 +73,32 @@ void	initialize_points(int y, int x, const fdf *data, int vertical)
 		end.z = data->matrix[y][x + 1].z;
 		end.color = data->matrix[y][x + 1].color;
 	}
-	bresenham()
+	bresenham(&start, &end, data);
 }
 
-void	draw_matrix(const fdf *data)
+void	draw_matrix(fdf *data)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	while (++i < data->height - 1)
+	while (++i < data->height)
 	{
 		j = -1;
-		while (++j < data->width - 1)
+		while (++j < data->width)
 		{
-			initialize_points(i, j, data, 0);
-			initialize_points(i, j, data, 1);
+			if (j < data->width -1)
+				initialize_points(i, j, data, 0);
+			if (i < data->height - 1)
+				initialize_points(i, j, data, 1);
 		}
 	}
-
 }
-
 
 void	create_image(fdf *data)
 {
-	data->img = (t_data *)malloc(sizeof(t_data));
-	if (!data->img)
-		return ;
-	data->img->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!data->img->img)
+	data->img.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!data->img.img)
 	{
 		ft_putendl_fd("Promblem with the creating image", STDERR_FILENO);
 		mlx_destroy_window(data->mlx, data->win);
@@ -86,9 +106,10 @@ void	create_image(fdf *data)
 		cleanup_matrix(data->matrix, data->height);
 		exit(EXIT_FAILURE);
 	}
-	data->img->addr = mlx_get_data_addr(data->img->img, &data->img->bpp, &data->img->line_length, &data->img->endian);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.line_length, &data->img.endian);
 	draw_matrix(data);
-	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	mlx_loop(data->mlx);
 }
 
 void	open_window(fdf *data, const char *win_name)

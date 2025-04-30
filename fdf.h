@@ -6,7 +6,7 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 01:38:59 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 13:21:04 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct
 	int			step;
 	void		*mlx;
 	void		*win;
-	t_data		*img;
+	t_data		img;
 }		fdf;
 
 

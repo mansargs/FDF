@@ -6,7 +6,7 @@
 /*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 01:40:51 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 13:46:58 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	create_matrixes(int fd, fdf *data)
 		perror("");
 		exit(errno);
 	}
-	data->step = 30;
+	data->step = 50;
 	generate_point_matrix(data);
 	fill_matrix(fd, data);
 }
