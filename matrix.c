@@ -1,21 +1,22 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   matrix.c                                           :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2025/04/24 16:35:31 by mansargs          #+#    #+#             */
-	/*   Updated: 2025/04/28 01:36:12 by lenovo           ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 19:19:45 by mansargs          #+#    #+#             */
+/*   Updated: 2025/04/30 21:20:16 by mansargs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
-void	generate_point_matrix(fdf *data)
+void	generate_point_matrix(t_fdf *data)
 {
 	int	i;
-	data->matrix = (z_clr**)malloc(sizeof(z_clr*) * data->height);
+
+	data->matrix = (t_z_clr **)malloc(sizeof(t_z_clr *) * data->height);
 	if (!data->matrix)
 	{
 		perror("");
@@ -24,7 +25,7 @@ void	generate_point_matrix(fdf *data)
 	i = -1;
 	while (++i < data->height)
 	{
-		data->matrix[i] = ft_calloc(data->width, sizeof(z_clr));
+		data->matrix[i] = ft_calloc(data->width, sizeof(t_z_clr));
 		if (!data->matrix[i])
 		{
 			cleanup_matrix(data->matrix, i);
@@ -34,22 +35,14 @@ void	generate_point_matrix(fdf *data)
 	}
 }
 
-static void	fill_into_color(int	*color, int	*z, const char *hex)
+static void	fill_into_color(int	*color, const char *hex)
 {
 	int	i;
 	int	digit;
 	int	len;
 
 	if (!hex)
-	{
-		if (*z > 0)
-			*color = 0x03396c;
-		else if (*z < 0)
-			*color = 0x3da4ab;
-		else
-			*color = 0xbbbbbb;
 		return ;
-	}
 	i = 1;
 	len = 7;
 	while (hex[++i])
@@ -64,11 +57,12 @@ static void	fill_into_color(int	*color, int	*z, const char *hex)
 	}
 }
 
-static bool	split_and_fill(z_clr *data, char *str)
+static bool	split_and_fill(t_z_clr *data, char *str)
 {
 	char	**split;
 	char	**divide;
 	int		i;
+
 	i = -1;
 	split = ft_split(str, ' ');
 	while (split[++i])
@@ -79,17 +73,18 @@ static bool	split_and_fill(z_clr *data, char *str)
 		if (!divide)
 			return (free(str), free_split(split), false);
 		data[i].z = ft_atoi(divide[0]);
-		fill_into_color(&data[i].color, &data[i].z, divide[1]);
+		fill_into_color(&data[i].color, divide[1]);
 		free_split(divide);
 	}
 	return (free(str), free_split(split), true);
 }
 
-void	fill_matrix(int fd, fdf *data)
+void	fill_matrix(int fd, t_fdf *data)
 {
 	char	*str;
 	int		i;
-	size_t len;
+	size_t	len;
+
 	i = 0;
 	while (1)
 	{

@@ -1,96 +1,18 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   render_window.c                                    :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2025/04/26 18:16:54 by mansargs          #+#    #+#             */
-	/*   Updated: 2025/04/28 12:08:21 by lenovo           ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_window.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
+/*   Updated: 2025/04/30 20:33:12 by mansargs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 
-void put_pixel_to_image(fdf *data, t_point *start)
-{
-	char *pixel;
-
-	if (start->x < 0 || start->y < 0 || start->x >= WIN_WIDTH || start->y >= WIN_HEIGHT)
-		return ;
-	pixel = (data->img.addr + (start->y * data->img.line_length + start->x * (data->img.bpp / 8)));
-	*(unsigned int *)pixel = start->color;
-}
-
-int interpolate(int color1, int color2, float ratio)
-{
-	int r1 = (color1 >> 16) & 0xFF;
-	int g1 = (color1 >> 8) & 0xFF;
-	int b1 = color1 & 0xFF;
-
-	int r2 = (color2 >> 16) & 0xFF;
-	int g2 = (color2 >> 8) & 0xFF;
-	int b2 = color2 & 0xFF;
-
-	int r = r1 + (r2 - r1) * ratio;
-	int g = g1 + (g2 - g1) * ratio;
-	int b = b1 + (b2 - b1) * ratio;
-
-	return (r << 16) | (g << 8) | b;
-}
-
-void bresenham(t_point *start, t_point *end, fdf *data)
-{
-	int dx = abs(end->x - start->x);
-	int dy = abs(end->y - start->y);
-	int step_x = 1 - 2 * (start->x > end->x);
-	int step_y = 1 - 2 * (start->y > end->y);
-	int err = dx - dy;
-
-	int total_steps = fmax(dx, dy);
-	int current_step = 0;
-
-	while (1)
-	{
-		float ratio = total_steps == 0 ? 0 : (float)current_step / total_steps;
-		start->color = interpolate(start->color, end->color, ratio);
-		put_pixel_to_image(data, start);
-
-		if (start->x == end->x && start->y == end->y)
-			break;
-
-		int err2 = 2 * err;
-		if (err2 > -dy)
-		{
-			err -= dy;
-			start->x += step_x;
-		}
-		if (err2 < dx)
-		{
-			err += dx;
-			start->y += step_y;
-		}
-
-		current_step++;
-	}
-}
-
-
-void	isometric(t_point *start, t_point *end, fdf *data)
-{
-	int	prev_x;
-
-	prev_x = start->x;
-	start->x = (start->x - start->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + WIN_HEIGHT / 4;
-	prev_x = end->x;
-	end->x = (end->x - end->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + WIN_HEIGHT / 4;
-	printf("start----->(%d, %d)\nend----------->(%d, %d)\n\n", start->x, start->y, end->x, end->y);
-	bresenham(start, end, data);
-}
-
-void	initialize_points(int y, int x, fdf *data, int vertical)
+void	initialize_points(int y, int x, t_fdf *data, int vertical)
 {
 	t_point	start;
 	t_point	end;
@@ -116,7 +38,7 @@ void	initialize_points(int y, int x, fdf *data, int vertical)
 	isometric(&start, &end, data);
 }
 
-void	draw_matrix(fdf *data)
+void	draw_matrix(t_fdf *data)
 {
 	int		i;
 	int		j;
@@ -135,7 +57,7 @@ void	draw_matrix(fdf *data)
 	}
 }
 
-void	create_image(fdf *data)
+void	create_image(t_fdf *data)
 {
 	data->img.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data->img.img)
@@ -146,13 +68,13 @@ void	create_image(fdf *data)
 		cleanup_matrix(data->matrix, data->height);
 		exit(EXIT_FAILURE);
 	}
-	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, &data->img.line_length, &data->img.endian);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp,
+			&data->img.line_length, &data->img.endian);
 	draw_matrix(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	mlx_loop(data->mlx);
 }
 
-void	open_window(fdf *data, const char *win_name)
+void	open_window(t_fdf *data, const char *win_name)
 {
 	if (ft_strrchr(win_name, '/'))
 		win_name = ft_strrchr(win_name, '/') + 1;
@@ -163,7 +85,8 @@ void	open_window(fdf *data, const char *win_name)
 		cleanup_matrix(data->matrix, data->height);
 		exit(EXIT_FAILURE);
 	}
-	data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, ft_substr(win_name, 0, ft_strlen(win_name) - 4));
+	data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT,
+			ft_substr(win_name, 0, ft_strlen(win_name) - 4));
 	if (!data->win)
 	{
 		ft_putendl_fd("Problem with the opening window", STDERR_FILENO);

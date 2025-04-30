@@ -6,13 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 16:55:39 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:17:27 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	count_columns_rows(int fd, fdf *data)
+static void	count_columns_rows(int fd, t_fdf *data)
 {
 	char	*line;
 	int		words;
@@ -40,7 +40,7 @@ static void	count_columns_rows(int fd, fdf *data)
 	close(fd);
 }
 
-static void	create_matrixes(int fd, fdf *data)
+static void	create_matrixes(int fd, t_fdf *data)
 {
 	if (fd == -1)
 	{
@@ -55,19 +55,18 @@ static void	create_matrixes(int fd, fdf *data)
 int	main(int argc, char *argv[])
 {
 	int		fd;
-	fdf	data;
-
+	t_fdf	data;
 
 	if (argc != 2 || !valid_file_name(argv[1]))
 	{
 		ft_putendl_fd("Invalid argument", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	ft_memset(&data, 0, sizeof(fdf));
+	ft_memset(&data, 0, sizeof(t_fdf));
 	fd = open(argv[1], O_RDONLY);
 	count_columns_rows(fd, &data);
 	fd = open(argv[1], O_RDONLY);
 	create_matrixes(fd, &data);
-	open_window	(&data, argv[1]);
+	open_window(&data, argv[1]);
 	return (EXIT_SUCCESS);
 }

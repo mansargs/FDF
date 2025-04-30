@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 13:21:04 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/04/30 21:21:06 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,51 +34,49 @@ typedef struct s_data
 	int		endian;
 }			t_data;
 
-typedef struct
+typedef struct s_matrix
 {
 	int	z;
 	int	color;
-}		z_clr;
+}		t_z_clr;
 
-typedef struct
+typedef struct s_point
 {
 	int	x;
 	int	y;
 	int	z;
 	int	color;
-}			t_point;
+}		t_point;
 
-
-
-typedef struct
+typedef struct s_fdf
 {
-	z_clr		**matrix;
+	t_z_clr		**matrix;
 	int			height;
 	int			width;
 	int			step;
 	void		*mlx;
 	void		*win;
 	t_data		img;
-}		fdf;
-
+}		t_fdf;
 
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH 1500
 
 // cleaning functions
-void	cleanup_matrix(z_clr	**matrix, int row);
+void	cleanup_matrix(t_z_clr	**matrix, int row);
 void	free_split(char **arr);
 void	safe_exit_from_file(int fd, char *line);
 
 //matrix
-void	generate_point_matrix(fdf *data);
-void	fill_matrix(int fd, fdf *data);
+void	generate_point_matrix(t_fdf *data);
+void	fill_matrix(int fd, t_fdf *data);
 
 // validation
 bool	valid_file_name(const char *file);
 bool	invalid_character(const char *str);
 bool	invalid_cell_content(const char *str);
 
-void	open_window(fdf *data, const char *win_name);
+void	open_window(t_fdf *data, const char *win_name);
+void	isometric(t_point *start, t_point *end, t_fdf *data);
 
 #endif
