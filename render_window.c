@@ -19,37 +19,62 @@ void put_pixel_to_image(fdf *data, t_point *start)
 	if (start->x < 0 || start->y < 0 || start->x >= WIN_WIDTH || start->y >= WIN_HEIGHT)
 		return ;
 	pixel = (data->img.addr + (start->y * data->img.line_length + start->x * (data->img.bpp / 8)));
-	*(unsigned int *)pixel = 0xffffff;
+	*(unsigned int *)pixel = start->color;
 }
 
-void	bresenham(t_point *start, t_point *end, fdf *data)
+int interpolate(int color1, int color2, float ratio)
 {
-	int	dif[4];
-	int	step[2];
+	int r1 = (color1 >> 16) & 0xFF;
+	int g1 = (color1 >> 8) & 0xFF;
+	int b1 = color1 & 0xFF;
 
-	dif[0] = abs(end->x - start->x);
-	dif[1] = abs(end->y - start->y);
-	step[0] = 1 - 2 * (start->x > end->x);
-	step[1] = 1 - 2 * (start->y > end->y);
-	dif[2] = dif[0] - dif[1];
+	int r2 = (color2 >> 16) & 0xFF;
+	int g2 = (color2 >> 8) & 0xFF;
+	int b2 = color2 & 0xFF;
+
+	int r = r1 + (r2 - r1) * ratio;
+	int g = g1 + (g2 - g1) * ratio;
+	int b = b1 + (b2 - b1) * ratio;
+
+	return (r << 16) | (g << 8) | b;
+}
+
+void bresenham(t_point *start, t_point *end, fdf *data)
+{
+	int dx = abs(end->x - start->x);
+	int dy = abs(end->y - start->y);
+	int step_x = 1 - 2 * (start->x > end->x);
+	int step_y = 1 - 2 * (start->y > end->y);
+	int err = dx - dy;
+
+	int total_steps = fmax(dx, dy);
+	int current_step = 0;
+
 	while (1)
 	{
+		float ratio = total_steps == 0 ? 0 : (float)current_step / total_steps;
+		start->color = interpolate(start->color, end->color, ratio);
 		put_pixel_to_image(data, start);
+
 		if (start->x == end->x && start->y == end->y)
 			break;
-		dif[3] = 2 * dif[2];
-		if (dif[3] > -dif[1])
+
+		int err2 = 2 * err;
+		if (err2 > -dy)
 		{
-			dif[2] -= dif[1];
-			start->x += step[0];
+			err -= dy;
+			start->x += step_x;
 		}
-		if (dif[3] < dif[0])
+		if (err2 < dx)
 		{
-			dif[2] += dif[0];
-			start->y += step[1];
+			err += dx;
+			start->y += step_y;
 		}
+
+		current_step++;
 	}
 }
+
 
 void	isometric(t_point *start, t_point *end, fdf *data)
 {
@@ -57,10 +82,10 @@ void	isometric(t_point *start, t_point *end, fdf *data)
 
 	prev_x = start->x;
 	start->x = (start->x - start->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + WIN_HEIGHT / 2;
+	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + WIN_HEIGHT / 4;
 	prev_x = end->x;
 	end->x = (end->x - end->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + WIN_HEIGHT / 2;
+	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + WIN_HEIGHT / 4;
 	printf("start----->(%d, %d)\nend----------->(%d, %d)\n\n", start->x, start->y, end->x, end->y);
 	bresenham(start, end, data);
 }

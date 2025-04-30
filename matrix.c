@@ -33,13 +33,23 @@ void	generate_point_matrix(fdf *data)
 		}
 	}
 }
-static void	fill_into_color(int	*color, const char *hex)
+
+static void	fill_into_color(int	*color, int	*z, const char *hex)
 {
 	int	i;
 	int	digit;
 	int	len;
+
 	if (!hex)
+	{
+		if (*z > 0)
+			*color = 0x03396c;
+		else if (*z < 0)
+			*color = 0x3da4ab;
+		else
+			*color = 0xbbbbbb;
 		return ;
+	}
 	i = 1;
 	len = 7;
 	while (hex[++i])
@@ -53,7 +63,8 @@ static void	fill_into_color(int	*color, const char *hex)
 		*color += digit << (4 * (len - i));
 	}
 }
-static bool	split_and_fill(z_clr*data, char *str)
+
+static bool	split_and_fill(z_clr *data, char *str)
 {
 	char	**split;
 	char	**divide;
@@ -68,7 +79,7 @@ static bool	split_and_fill(z_clr*data, char *str)
 		if (!divide)
 			return (free(str), free_split(split), false);
 		data[i].z = ft_atoi(divide[0]);
-		fill_into_color(&data[i].color, divide[1]);
+		fill_into_color(&data[i].color, &data[i].z, divide[1]);
 		free_split(divide);
 	}
 	return (free(str), free_split(split), true);
