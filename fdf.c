@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 21:17:27 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:23:03 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	create_matrixes(int fd, t_fdf *data)
 		exit(errno);
 	}
 	data->step = 40;
+	data->move_x = WIN_WIDTH / 2;
+	data->move_y = WIN_HEIGHT / 4;
 	generate_point_matrix(data);
 	fill_matrix(fd, data);
 }

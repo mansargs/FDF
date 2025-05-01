@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 14:04:26 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:02:30 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,11 @@ void	isometric(t_point *start, t_point *end, t_fdf *data)
 	int	prev_x;
 
 	prev_x = start->x;
-	start->x = (start->x - start->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + WIN_HEIGHT / 4;
+	start->x = (start->x - start->y) * cos(M_PI / 6) + data->move_x;
+	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z + data->move_y;
 	prev_x = end->x;
-	end->x = (end->x - end->y) * cos(M_PI / 6) + WIN_WIDTH / 2;
-	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + WIN_HEIGHT / 4;
-	printf("start  -----> (%d, %d)\n end  ------->(%d, %d)\n", start->x, start->y, end->x, end->y);
+	end->x = (end->x - end->y) * cos(M_PI / 6) + data->move_x;
+	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z + data->move_y;
+//	printf("start  -----> (%d, %d)\n end  ------->(%d, %d)\n", start->x, start->y, end->x, end->y);
 	bresenham(start, end, data);
 }

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 15:57:20 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:46:12 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,26 @@ int	close_win(t_fdf *data)
 	return (0);
 }
 
-int	keypress_handler(int	keycode, t_fdf *data)
+int	keypress_handler(int keycode, t_fdf *data)
 {
 	//printf("keycode -->%d\n", keycode);
 	if (keycode == Escape)
 			close_win(data);
 	if (keycode == Up)
-		
-	if (keycode == XK_Up)
+		move(data, 0, MOVE_Y);
+	else if (keycode == Down)
+		move(data, 0 , -MOVE_Y);
+	else if (keycode == Left)
+		move(data, MOVE_X, 0);
+	else if (keycode == Right)
+		move(data, -MOVE_X, 0);
 	return (0);
 }
 
 void	create_image(t_fdf *data)
 {
-	data->img.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!data->img.img)
+		data->img.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data->img.img)
 	{
 		ft_putendl_fd("Promblem with the creating image", STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 15:56:52 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:33:43 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_fdf
 	int			height;
 	int			width;
 	int			step;
+	int			move_x;
+	int			move_y;
 	void		*mlx;
 	void		*win;
 	t_data		img;
@@ -86,7 +88,21 @@ typedef struct s_fdf
 #  define Down 65364
 # endif
 
+# ifndef Left
+#  define Left 65361
+# endif
 
+# ifndef Right
+#  define Right 65363
+# endif
+
+# ifndef MOVE_X
+#  define MOVE_X -15
+# endif
+
+# ifndef MOVE_Y
+#  define MOVE_Y -15
+# endif
 
 // cleaning functions
 void	cleanup_matrix(t_z_clr	**matrix, int row);
@@ -104,5 +120,8 @@ bool	invalid_cell_content(const char *str);
 
 void	open_window(t_fdf *data, char *win_name);
 void	isometric(t_point *start, t_point *end, t_fdf *data);
+void	create_image(t_fdf *data);
+
+void	move(t_fdf *data, int move_step_x, int move_step_y);
 
 #endif
