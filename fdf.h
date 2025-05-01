@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 16:33:43 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:10:26 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,18 @@ typedef struct s_fdf
 #  define MOVE_Y -15
 # endif
 
+# ifndef ZOOM_STEP
+#  define ZOOM_STEP 5
+# endif
+
+# ifndef M_ZOOM
+#  define M_ZOOM 109
+# endif
+
+# ifndef N_UNZOOM
+#  define N_UNZOOM 110
+# endif
+
 // cleaning functions
 void	cleanup_matrix(t_z_clr	**matrix, int row);
 void	free_split(char **arr);
@@ -123,5 +135,6 @@ void	isometric(t_point *start, t_point *end, t_fdf *data);
 void	create_image(t_fdf *data);
 
 void	move(t_fdf *data, int move_step_x, int move_step_y);
+void	zoom(t_fdf * data, int zoom_step);
 
 #endif

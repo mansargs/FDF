@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 16:46:12 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:12:11 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	close_win(t_fdf *data)
 
 int	keypress_handler(int keycode, t_fdf *data)
 {
-	//printf("keycode -->%d\n", keycode);
+	printf("keycode -->%d\n", keycode);
 	if (keycode == Escape)
 			close_win(data);
 	if (keycode == Up)
@@ -84,6 +84,10 @@ int	keypress_handler(int keycode, t_fdf *data)
 		move(data, MOVE_X, 0);
 	else if (keycode == Right)
 		move(data, -MOVE_X, 0);
+	else if (keycode == M_ZOOM)
+		zoom(data, ZOOM_STEP);
+	else if (keycode == N_UNZOOM)
+		zoom(data, -ZOOM_STEP);
 	return (0);
 }
 
