@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 18:10:26 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 21:22:30 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_fdf
 	int			width;
 	int			step;
 	int			move_x;
+	int			zoom;
 	int			move_y;
 	void		*mlx;
 	void		*win;
@@ -105,7 +106,7 @@ typedef struct s_fdf
 # endif
 
 # ifndef ZOOM_STEP
-#  define ZOOM_STEP 5
+#  define ZOOM_STEP 0.5
 # endif
 
 # ifndef M_ZOOM
@@ -115,6 +116,20 @@ typedef struct s_fdf
 # ifndef N_UNZOOM
 #  define N_UNZOOM 110
 # endif
+
+# ifndef CHANGE_Z
+#  define CHANGE_Z 5
+# endif
+
+# ifndef Z_UP
+#  define Z_UP 122
+# endif
+
+# ifndef Z_DOWN
+#  define Z_DOWN 120
+# endif
+
+
 
 // cleaning functions
 void	cleanup_matrix(t_z_clr	**matrix, int row);
@@ -135,6 +150,7 @@ void	isometric(t_point *start, t_point *end, t_fdf *data);
 void	create_image(t_fdf *data);
 
 void	move(t_fdf *data, int move_step_x, int move_step_y);
-void	zoom(t_fdf * data, int zoom_step);
+void	zoom(t_fdf * data, float zoom_step);
+void	change_z(t_fdf *data, int z_step);
 
 #endif

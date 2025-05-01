@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 18:12:11 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:34:48 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ int	keypress_handler(int keycode, t_fdf *data)
 		zoom(data, ZOOM_STEP);
 	else if (keycode == N_UNZOOM)
 		zoom(data, -ZOOM_STEP);
+	else if (keycode == Z_UP)
+		change_z(data, CHANGE_Z);
+	else if (keycode == Z_DOWN)
+		change_z(data, -CHANGE_Z);
 	return (0);
 }
 
