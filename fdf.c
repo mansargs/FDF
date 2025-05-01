@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 21:27:53 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/02 03:00:42 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static void	create_matrixes(int fd, t_fdf *data)
 		exit(errno);
 	}
 	data->step = 30;
-	data->zoom = 1;
-	data->move_x = WIN_WIDTH / 2;
-	data->move_y = WIN_HEIGHT / 4;
+	data->zoom = 3;
+	data->shift_x = WIN_WIDTH / 2;
+	data->shift_y = WIN_HEIGHT / 4;
 	generate_point_matrix(data);
 	fill_matrix(fd, data);
 }

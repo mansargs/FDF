@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 21:22:30 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/02 03:27:14 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ typedef struct s_fdf
 	int			height;
 	int			width;
 	int			step;
-	int			move_x;
+	int			shift_x;
 	int			zoom;
-	int			move_y;
+	int			shift_y;
 	void		*mlx;
 	void		*win;
 	t_data		img;
@@ -97,16 +97,16 @@ typedef struct s_fdf
 #  define Right 65363
 # endif
 
-# ifndef MOVE_X
-#  define MOVE_X -15
+# ifndef SHIFT
+#  define SHIFT 15
 # endif
 
-# ifndef MOVE_Y
-#  define MOVE_Y -15
+# ifndef STEP
+#  define STEP 5
 # endif
 
 # ifndef ZOOM_STEP
-#  define ZOOM_STEP 0.5
+#  define ZOOM_STEP 0.2
 # endif
 
 # ifndef M_ZOOM
@@ -149,8 +149,7 @@ void	open_window(t_fdf *data, char *win_name);
 void	isometric(t_point *start, t_point *end, t_fdf *data);
 void	create_image(t_fdf *data);
 
-void	move(t_fdf *data, int move_step_x, int move_step_y);
-void	zoom(t_fdf * data, float zoom_step);
+void	zoom(t_fdf * data, float zoom_delta, int step);
 void	change_z(t_fdf *data, int z_step);
 
 #endif

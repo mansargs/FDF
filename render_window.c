@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 20:34:48 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/02 03:29:47 by lenovo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,26 @@ void	initialize_points(int y, int x, t_fdf *data, int vertical)
 
 	start.x = x * data->step;
 	start.y = y * data->step;
-	start.z = data->matrix[y][x].z;
+	start.z = data->matrix[y][x].z * data->zoom;
 	start.color = data->matrix[y][x].color;
+
 	if (vertical)
 	{
 		end.x = x * data->step;
 		end.y = (y + 1) * data->step;
-		end.z = data->matrix[y + 1][x].z;
+		end.z = data->matrix[y + 1][x].z * data->zoom;
 		end.color = data->matrix[y + 1][x].color;
 	}
 	else
 	{
 		end.x = (x + 1) * data->step;
 		end.y = y * data->step;
-		end.z = data->matrix[y][x + 1].z;
+		end.z = data->matrix[y][x + 1].z * data->zoom;
 		end.color = data->matrix[y][x + 1].color;
 	}
 	isometric(&start, &end, data);
 }
+
 
 void	draw_matrix(t_fdf *data)
 {
@@ -77,21 +79,19 @@ int	keypress_handler(int keycode, t_fdf *data)
 	if (keycode == Escape)
 			close_win(data);
 	if (keycode == Up)
-		move(data, 0, MOVE_Y);
+		data->shift_y -= SHIFT;
 	else if (keycode == Down)
-		move(data, 0 , -MOVE_Y);
+		data->shift_y += SHIFT;
 	else if (keycode == Left)
-		move(data, MOVE_X, 0);
+		data->shift_x -= SHIFT;
 	else if (keycode == Right)
-		move(data, -MOVE_X, 0);
+		data->shift_x += SHIFT;
 	else if (keycode == M_ZOOM)
-		zoom(data, ZOOM_STEP);
+		zoom(data, ZOOM_STEP, STEP);
 	else if (keycode == N_UNZOOM)
-		zoom(data, -ZOOM_STEP);
-	else if (keycode == Z_UP)
-		change_z(data, CHANGE_Z);
-	else if (keycode == Z_DOWN)
-		change_z(data, -CHANGE_Z);
+		zoom(data, -ZOOM_STEP, -STEP);
+	ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
+	create_image(data);
 	return (0);
 }
 
