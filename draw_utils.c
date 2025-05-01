@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 02:28:19 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/05/01 14:04:26 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,27 @@ void	put_pixel_to_image(t_fdf *data, t_point *start)
 		return ;
 	pixel = (data->img.addr + (start->y * data->img.line_length
 				+ start->x * (data->img.bpp / 8)));
-	*(unsigned int *)pixel = 0xffffff;
+	*(unsigned int *)pixel = start->color;
 }
 
-int	interpolate(int color1, int color2, int cur_step, int tot_step)
+void	determine_color_depends_z(t_point *point)
+{
+	if (point->color == 0)
+	{
+		if (!point->z)
+			point->color = 0xffffff;
+		else if (point->z <= 40 && point->z > 0)
+			point->color = 0xc68642;
+		else if (point->z > 40)
+			point->color = 0x8d5524;
+		else if (point->z < 0 && point->z >= -40)
+			point->color = 0xf1c27d;
+		else
+			point->color = 0xe0ac69 ;
+	}
+}
+
+int	interpolate(int	color1, int color2, int cur_step, int tot_step)
 {
 	int		rgb1[3];
 	int		rgb2[3];
@@ -47,7 +64,7 @@ int	interpolate(int color1, int color2, int cur_step, int tot_step)
 	return ((final_rgb[0] << 16) | (final_rgb[1] << 8) | final_rgb[2]);
 }
 
- void	init_bresenham_data(int *dif_and_dp, int *step, const t_point *s, const t_point *e)
+void	init_bresenham_data(int *dif_and_dp, int *step, t_point *s, t_point *e)
 {
 	dif_and_dp[0] = abs(e->x - s->x);
 	dif_and_dp[1] = abs(e->y - s->y);
@@ -56,6 +73,8 @@ int	interpolate(int color1, int color2, int cur_step, int tot_step)
 	dif_and_dp[2] = dif_and_dp[0] - dif_and_dp[1];
 	step[3] = fmax(dif_and_dp[0], dif_and_dp[1]);
 	step[2] = 0;
+	determine_color_depends_z(s);
+	determine_color_depends_z(e);
 }
 
 void	bresenham(t_point *start, t_point *end, t_fdf *data)
@@ -84,7 +103,6 @@ void	bresenham(t_point *start, t_point *end, t_fdf *data)
 		++step[2];
 	}
 }
-
 
 void	isometric(t_point *start, t_point *end, t_fdf *data)
 {
