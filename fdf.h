@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 03:27:14 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/05/02 18:10:11 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_fdf
 	int			step;
 	int			shift_x;
 	int			zoom;
+	bool		iso;
+	bool		top_view;
 	int			shift_y;
 	void		*mlx;
 	void		*win;
@@ -102,7 +104,7 @@ typedef struct s_fdf
 # endif
 
 # ifndef STEP
-#  define STEP 5
+#  define STEP 1
 # endif
 
 # ifndef ZOOM_STEP
@@ -148,8 +150,11 @@ bool	invalid_cell_content(const char *str);
 void	open_window(t_fdf *data, char *win_name);
 void	isometric(t_point *start, t_point *end, t_fdf *data);
 void	create_image(t_fdf *data);
+void	bresenham(t_point *start, t_point *end, t_fdf *data);
 
 void	zoom(t_fdf * data, float zoom_delta, int step);
 void	change_z(t_fdf *data, int z_step);
+void	top_view(t_fdf *data);
+void	iso(t_fdf *data);
 
 #endif

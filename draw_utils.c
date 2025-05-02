@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 03:31:00 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/05/02 17:35:44 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,4 @@ void	isometric(t_point *start, t_point *end, t_fdf *data)
 	prev_x = end->x;
 	end->x = (end->x - end->y) * cos(M_PI / 6) + data->shift_x;
 	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z+ data->shift_y;
-//	printf("start  -----> (%d, %d)\n end  ------->(%d, %d)\n", start->x, start->y, end->x, end->y);
-	bresenham(start, end, data);
 }

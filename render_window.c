@@ -3,40 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   render_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lenovo <lenovo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 03:29:47 by lenovo           ###   ########.fr       */
+/*   Updated: 2025/05/02 18:11:16 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void	init_point(int y, int x, t_point *point, t_fdf *data)
+{
+	point->x = x * data->step;
+	point->y = y * data->step;
+	point->z = data->matrix[y][x].z * data->zoom;
+	point->color = data->matrix[y][x].color;
+	if (data->top_view)
+	{
+		point->x += data->shift_x;
+		point->y += data->shift_y;
+	}
+}
 
 void	initialize_points(int y, int x, t_fdf *data, int vertical)
 {
 	t_point	start;
 	t_point	end;
 
-	start.x = x * data->step;
-	start.y = y * data->step;
-	start.z = data->matrix[y][x].z * data->zoom;
-	start.color = data->matrix[y][x].color;
-
+	init_point(y, x, &start, data);
 	if (vertical)
-	{
-		end.x = x * data->step;
-		end.y = (y + 1) * data->step;
-		end.z = data->matrix[y + 1][x].z * data->zoom;
-		end.color = data->matrix[y + 1][x].color;
-	}
+		init_point(y + 1, x, &end, data);
 	else
-	{
-		end.x = (x + 1) * data->step;
-		end.y = y * data->step;
-		end.z = data->matrix[y][x + 1].z * data->zoom;
-		end.color = data->matrix[y][x + 1].color;
-	}
-	isometric(&start, &end, data);
+		init_point(y, x + 1, &end, data);
+	if (data->iso)
+		isometric(&start, &end, data);
+	bresenham(&start, &end, data);
 }
 
 
@@ -70,7 +71,6 @@ int	close_win(t_fdf *data)
 	free(data->mlx);
 	cleanup_matrix(data->matrix, data->height);
 	exit(EXIT_SUCCESS);
-	return (0);
 }
 
 int	keypress_handler(int keycode, t_fdf *data)
@@ -90,6 +90,10 @@ int	keypress_handler(int keycode, t_fdf *data)
 		zoom(data, ZOOM_STEP, STEP);
 	else if (keycode == N_UNZOOM)
 		zoom(data, -ZOOM_STEP, -STEP);
+	else if (keycode == 116)
+		top_view(data);
+	else if (keycode == 105)
+		iso(data);
 	ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
 	create_image(data);
 	return (0);
