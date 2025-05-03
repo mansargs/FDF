@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 17:58:50 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:14:52 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ void	initialize_points(int y, int x, t_fdf *data, int vertical)
 		init_point(y + 1, x, &end, data);
 	else
 		init_point(y, x + 1, &end, data);
-	if (data->top_view)
-		top_view(data);
-	rotate_x_axis(&start, &end, data);
-	rotate_y_axis(&start, &end, data);
+	if (!data->perspective)
+	{
+		rotate_x_axis(&start, &end, data);
+		rotate_y_axis(&start, &end, data);
+	}
 	rotate_z_axis(&start, &end, data);
 	if (data->iso)
 		isometric(&start, &end, data);

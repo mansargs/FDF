@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:18:17 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 17:45:57 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:15:21 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,7 @@ void	perspect(t_fdf *data)
 	data->iso = false;
 	data->top_view = false;
 	data->perspective = true;
+	data->angle_x = 0.0;
+	data->angle_y = 0.0;
+	data->angle_z = 0.0;
 }
