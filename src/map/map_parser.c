@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:08:43 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:09:11 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 21:46:55 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "map.h"
 
 void	generate_point_matrix(t_fdf *data)
 {

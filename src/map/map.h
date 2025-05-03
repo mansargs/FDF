@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 19:17:19 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 21:42:54 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 20:58:22 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 21:12:46 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#ifndef MAP_H
+# define MAP_H
 
-int	main(int argc, char *argv[])
-{
-	int		fd;
-	t_fdf	data;
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <stdbool.h>
+# include "includes/defines.h"
+# include "includes/structes.h"
+# include "../library/libft/libft.h"
+# include "../library/gnl/get_next_line.h"
 
-	if (argc != 2 || !valid_file_name(argv[1]))
-	{
-		ft_putendl_fd("Invalid argument", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	ft_memset(&data, 0, sizeof(t_fdf));
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		perror("");
-		exit(errno);
-	}
-	create_matrixe(fd, &data);
-	open_window(&data, argv[1]);
-	return (EXIT_SUCCESS);
-}
+#endif
