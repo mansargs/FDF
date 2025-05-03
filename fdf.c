@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 02:49:07 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:37:03 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ static void	create_matrixes(int fd, t_fdf *data)
 	data->zoom = 3;
 	data->iso = true;
 	data->top_view = false;
-	// data->rotate_x = false;
-	// data->rotate_y = false;
-	// data->rotate_z = false;
+	data->perspective = false;
 	data->angle_x = 0.0;
 	data->angle_y = 0.0;
 	data->angle_z = 0.0;

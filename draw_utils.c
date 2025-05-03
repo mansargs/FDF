@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 02:59:26 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:56:49 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@ void	put_pixel_to_image(t_fdf *data, t_point *start)
 	pixel = (data->img.addr + (start->y * data->img.line_length
 				+ start->x * (data->img.bpp / 8)));
 	*(unsigned int *)pixel = start->color;
-}
-
-void	determine_color_depends_z(t_point *point)
-{
-	if (point->color == 0)
-	{
-		if (!point->z)
-			point->color = 0xffffff;
-		else
-			point->color = 0x851e3e;
-	}
 }
 
 int	interpolate(int	color1, int color2, int cur_step, int tot_step)
@@ -67,8 +56,6 @@ void	init_bresenham_data(int *dif_and_dp, int *step, t_point *s, t_point *e)
 	dif_and_dp[2] = dif_and_dp[0] - dif_and_dp[1];
 	step[3] = fmax(dif_and_dp[0], dif_and_dp[1]);
 	step[2] = 0;
-	determine_color_depends_z(s);
-	determine_color_depends_z(e);
 }
 
 void	bresenham(t_point *start, t_point *end, t_fdf *data)
@@ -108,4 +95,18 @@ void	isometric(t_point *start, t_point *end, t_fdf *data)
 	prev_x = end->x;
 	end->x = (end->x - end->y) * cos(M_PI / 6) + data->shift_x;
 	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z+ data->shift_y;
+}
+
+void	perspective(t_point *start, t_point *end)
+{
+	if (start->z + FOCAL != 0)
+	{
+		start->x = (start->x * FOCAL) / (start->z + FOCAL);
+		start->y = (start->y * FOCAL) / (start->z + FOCAL);
+	}
+	if (end->z + FOCAL != 0)
+	{
+		end->x = (end->x * FOCAL) / (end->z + FOCAL);
+		end->y = (end->y * FOCAL) / (end->z + FOCAL);
+	}
 }

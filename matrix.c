@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:19:45 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/01 18:41:29 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 16:52:06 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,22 @@ void	generate_point_matrix(t_fdf *data)
 	}
 }
 
-static void	fill_into_color(int	*color, const char *hex)
+static void	fill_into_color(int	*color, int z, const char *hex)
 {
 	int	i;
 	int	digit;
 	int	len;
 
 	if (!hex)
+	{
+		if (z > 0)
+			*color = 0x005b96;
+		else if (z < 0)
+			*color = 0x851e3e;
+		else
+			*color = 0x83d0c9;
 		return ;
+	}
 	i = 1;
 	len = 7;
 	while (hex[++i])
@@ -73,7 +81,7 @@ static bool	split_and_fill(t_z_clr *data, char *str)
 		if (!divide)
 			return (free(str), free_split(split), false);
 		data[i].z = ft_atoi(divide[0]);
-		fill_into_color(&data[i].color, divide[1]);
+		fill_into_color(&data[i].color, data[i].z, divide[1]);
 		free_split(divide);
 	}
 	return (free(str), free_split(split), true);

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 02:51:06 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:03:04 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_fdf
 	int			zoom;
 	bool		iso;
 	bool		top_view;
+	bool		perspective;
 	bool		rotate_x;
 	bool		rotate_y;
 	bool		rotate_z;
@@ -137,7 +138,7 @@ typedef struct s_fdf
 #  define Z_DOWN 120
 # endif
 
-
+#define FOCAL 100
 
 // cleaning functions
 void	cleanup_matrix(t_z_clr	**matrix, int row);
@@ -155,6 +156,7 @@ bool	invalid_cell_content(const char *str);
 
 void	open_window(t_fdf *data, char *win_name);
 void	isometric(t_point *start, t_point *end, t_fdf *data);
+void	perspective(t_point *start, t_point *end);
 void	create_image(t_fdf *data);
 void	bresenham(t_point *start, t_point *end, t_fdf *data);
 
@@ -162,6 +164,7 @@ void	zoom(t_fdf * data, float zoom_delta, int step);
 void	change_z(t_fdf *data, int z_step);
 void	top_view(t_fdf *data);
 void	iso(t_fdf *data);
+void	perspect(t_fdf *data);
 
 void	rotate_x_axis(t_point *start, t_point *end, const t_fdf *data);
 void	rotate_y_axis(t_point *start, t_point *end, const t_fdf *data);

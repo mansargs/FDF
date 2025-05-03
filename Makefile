@@ -3,7 +3,7 @@ MAKEFLAGS += --no-print-directory
 NAME = fdf
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 RM = rm -f
 
