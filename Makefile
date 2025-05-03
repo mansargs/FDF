@@ -3,25 +3,38 @@ MAKEFLAGS += --no-print-directory
 NAME = fdf
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror # -g3 -fsanitize=address
 
 RM = rm -f
 
-LIBFT = libft
-GNL = gnl
-MLX = mlx
+SOURCE  = src
+LIBRARY = library
 
-HEADER = -I$(LIBFT) -I$(GNL) -I. -I$(MLX)
+EVENTS = $(SOURCE)/events
+MAP = $(SOURCE)/map
+POINTS = $(SOURCE)/points
+RENDER = $(SOURCE)/render
+UTILS = $(SOURCE)/utils
+
+LIBFT = $(LIBRARY)/libft
+GNL = $(LIBRARY)/gnl
+MLX = $(LIBRARY)/mlx
+
+HEADER = -I$(LIBFT) -I$(GNL) -I$(MLX)
 
 SRC = $(GNL)/get_next_line.c $(GNL)/get_next_line_utils.c \
-		fdf.c validation.c matrix.c cleaning_functions.c \
-		render_window.c draw_utils.c move.c rotation.c
+		$(EVENTS)/input_handler.c $(EVENTS)/window_utils.c \
+		$(MAP)/map_loader.c $(MAP)/map_parser.c \
+		$(POINTS)/point_utils.c \
+		$(RENDER)/bresenham.c $(RENDER)/draw_utils.c $(RENDER)/projection.c $(RENDER)/transformation.c \
+		$(UTILS)/memory_utils.c $(UTILS)/validation_utils.c \
+		main.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)/libft.a $(MLX)/libmlx.a $(OBJ)
+$(NAME): $(LIBFT)/libft.a $(MLX)/libmlx.a $(OBJ) $(HEADER)
 	@echo "🔗 Linking objects and creating $(NAME)..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT) -lft -L$(MLX) -lmlx -lXext -lX11 -lm -lz
 	@echo "✅ Build complete: $(NAME)"

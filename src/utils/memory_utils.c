@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaning_functions.c                               :+:      :+:    :+:   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 17:01:11 by mansargs          #+#    #+#             */
-/*   Updated: 2025/04/30 19:32:42 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 18:53:08 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 19:18:46 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+void	free_split(char **arr)
+{
+	int	i;
+
+	if (arr)
+	{
+		i = 0;
+		while (arr[i])
+			free(arr[i++]);
+		free(arr);
+	}
+}
 
 void	cleanup_matrix(t_z_clr	**matrix, int row)
 {
@@ -25,19 +36,6 @@ void	cleanup_matrix(t_z_clr	**matrix, int row)
 			matrix[i] = NULL;
 		}
 		free(matrix);
-	}
-}
-
-void	free_split(char **arr)
-{
-	int	i;
-
-	if (arr)
-	{
-		i = 0;
-		while (arr[i])
-			free(arr[i++]);
-		free(arr);
 	}
 }
 

@@ -1,29 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 16:18:17 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 18:15:21 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 19:00:27 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 19:01:59 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "fdf.h"
-
-void	zoom(t_fdf *data, float zoom_delta, int step_delta)
-{
-	if (data->zoom +zoom_delta != 0 && data->zoom + zoom_delta != 10)
-	{
-		data->zoom += zoom_delta;
-		if (data->zoom < 1)
-			data->zoom = 1;
-		data->step += step_delta;
-		if (data->step < 1)
-			data->step = 1;
-	}
-}
 
 void	top_view(t_fdf *data)
 {
@@ -51,4 +36,30 @@ void	perspect(t_fdf *data)
 	data->angle_x = 0.0;
 	data->angle_y = 0.0;
 	data->angle_z = 0.0;
+}
+
+void	isometric(t_point *start, t_point *end, t_fdf *data)
+{
+	int	prev_x;
+
+	prev_x = start->x;
+	start->x = (start->x - start->y) * cos(M_PI / 6) + data->shift_x;;
+	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z+ data->shift_y;
+	prev_x = end->x;
+	end->x = (end->x - end->y) * cos(M_PI / 6) + data->shift_x;
+	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z+ data->shift_y;
+}
+
+void	perspective(t_point *start, t_point *end)
+{
+	if (start->z + FOCAL != 0)
+	{
+		start->x = (start->x * FOCAL) / (start->z + FOCAL);
+		start->y = (start->y * FOCAL) / (start->z + FOCAL);
+	}
+	if (end->z + FOCAL != 0)
+	{
+		end->x = (end->x * FOCAL) / (end->z + FOCAL);
+		end->y = (end->y * FOCAL) / (end->z + FOCAL);
+	}
 }

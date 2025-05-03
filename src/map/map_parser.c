@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 19:19:45 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 16:52:06 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 19:08:43 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 19:09:11 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "fdf.h"
 
 void	generate_point_matrix(t_fdf *data)
 {
@@ -85,31 +83,4 @@ static bool	split_and_fill(t_z_clr *data, char *str)
 		free_split(divide);
 	}
 	return (free(str), free_split(split), true);
-}
-
-void	fill_matrix(int fd, t_fdf *data)
-{
-	char	*str;
-	int		i;
-	size_t	len;
-
-	i = 0;
-	while (1)
-	{
-		str = get_next_line(fd);
-		if (!str)
-			break ;
-		len = ft_strlen(str);
-		if (len > 0 && str[len - 1] == '\n')
-			str[len - 1] = '\0';
-		if (!split_and_fill(data->matrix[i], str))
-		{
-			cleanup_matrix(data->matrix, data->height);
-			get_next_line(-1);
-			ft_putendl_fd("Problem with the memory or invalid content",
-				STDERR_FILENO);
-			exit(EXIT_FAILURE);
-		}
-		++i;
-	}
 }

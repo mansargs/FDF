@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   map_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 09:43:41 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 17:37:03 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 19:08:24 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "fdf.h"
 
 static void	count_columns_rows(int fd, t_fdf *data)
 {
@@ -61,21 +59,30 @@ static void	create_matrixes(int fd, t_fdf *data)
 	fill_matrix(fd, data);
 }
 
-int	main(int argc, char *argv[])
+void	fill_matrix(int fd, t_fdf *data)
 {
-	int		fd;
-	t_fdf	data;
+	char	*str;
+	int		i;
+	size_t	len;
 
-	if (argc != 2 || !valid_file_name(argv[1]))
+	i = 0;
+	while (1)
 	{
-		ft_putendl_fd("Invalid argument", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		str = get_next_line(fd);
+		if (!str)
+			break ;
+		len = ft_strlen(str);
+		if (len > 0 && str[len - 1] == '\n')
+			str[len - 1] = '\0';
+		if (!split_and_fill(data->matrix[i], str))
+		{
+			cleanup_matrix(data->matrix, data->height);
+			get_next_line(-1);
+			ft_putendl_fd("Problem with the memory or invalid content",
+				STDERR_FILENO);
+			exit(EXIT_FAILURE);
+		}
+		++i;
 	}
-	ft_memset(&data, 0, sizeof(t_fdf));
-	fd = open(argv[1], O_RDONLY);
-	count_columns_rows(fd, &data);
-	fd = open(argv[1], O_RDONLY);
-	create_matrixes(fd, &data);
-	open_window(&data, argv[1]);
-	return (EXIT_SUCCESS);
 }
+

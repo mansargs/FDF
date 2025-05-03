@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 18:19:42 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:03:01 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,62 +73,27 @@ typedef struct s_fdf
 
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH 1500
+# define SHIFT 15
+# define STEP 1
+# define DESTROY 17
+# define KEY_PRESS 2
+# define KEY_PRESS_MASK 1L << 0
+# define ZOOM_STEP 0.2
+# define CHANGE_Z 5
 
-# ifndef DestroyNotify
-#  define DestroyNotify 17
-# endif
-
-# ifndef KeyPress
-#  define KeyPress 2
-# endif
-
-# ifndef KeyPressMask
-#  define KeyPressMask 1L << 0
-# endif
-
-# ifndef Escape
-#  define Escape 65307
-# endif
-
-# ifndef Up
-#  define Up 65362
-# endif
-
-# ifndef Down
-#  define Down 65364
-# endif
-
-# ifndef Left
-#  define Left 65361
-# endif
-
-# ifndef Right
-#  define Right 65363
-# endif
-
-# ifndef SHIFT
-#  define SHIFT 15
-# endif
-
-# ifndef STEP
-#  define STEP 1
-# endif
-
-# ifndef ZOOM_STEP
-#  define ZOOM_STEP 0.2
-# endif
-
-# ifndef M_ZOOM
-#  define M_ZOOM 109
-# endif
-
-# ifndef N_UNZOOM
-#  define N_UNZOOM 110
-# endif
-
-# ifndef CHANGE_Z
-#  define CHANGE_Z 5
-# endif
+# define ESC 65307
+# define UP 65362
+# define DOWN 65364
+# define LEFT 65361
+# define RIGHT 65363
+# define KEY_W 87
+# define KEY_S 83
+# define KEY_A 65
+# define KEY_D 68
+# define KEY_U 85
+# define KEY_J 74
+# define KEY_K 75
+# define KEY_I 73
 
 # ifndef Z_UP
 #  define Z_UP 122

@@ -1,16 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotation.c                                         :+:      :+:    :+:   */
+/*   transformation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 01:05:21 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 02:51:29 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/03 19:02:21 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/03 19:03:38 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "fdf.h"
 
 void	rotate_x_axis(t_point *start, t_point *end, const t_fdf *data)
 {
@@ -49,4 +47,17 @@ void rotate_z_axis(t_point *start, t_point *end, const t_fdf *data)
 	prev_y = end->y;
 	end->x = prev_x * cos(data->angle_z) - prev_y * sin(data->angle_z);
 	end->y = prev_x * sin(data->angle_z) + prev_y * cos(data->angle_z);
+}
+
+void	zoom(t_fdf *data, float zoom_delta, int step_delta)
+{
+	if (data->zoom +zoom_delta != 0 && data->zoom + zoom_delta != 10)
+	{
+		data->zoom += zoom_delta;
+		if (data->zoom < 1)
+			data->zoom = 1;
+		data->step += step_delta;
+		if (data->step < 1)
+			data->step = 1;
+	}
 }
