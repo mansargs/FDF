@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:58:46 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 18:59:57 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:54:53 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "render.h"
 
 void	put_pixel_to_image(t_fdf *data, t_point *start)
 {
@@ -22,7 +24,7 @@ void	put_pixel_to_image(t_fdf *data, t_point *start)
 	*(unsigned int *)pixel = start->color;
 }
 
-void	draw_matrix(t_fdf *data)
+static void	draw_matrix(t_fdf *data)
 {
 	int		i;
 	int		j;

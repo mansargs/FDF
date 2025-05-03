@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:17:19 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 21:42:54 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:11:27 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[])
 		perror("");
 		exit(errno);
 	}
-	create_matrixe(fd, &data);
+	create_matrix(fd, &data);
 	open_window(&data, argv[1]);
 	return (EXIT_SUCCESS);
 }

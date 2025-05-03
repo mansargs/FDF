@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:36 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:13:39 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:49:10 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "events.h"
 
 int	close_win(t_fdf *data)
 {
@@ -23,35 +25,41 @@ int	close_win(t_fdf *data)
 	exit(EXIT_SUCCESS);
 }
 
+static void	continue_search(int	keycode, t_fdf *data)
+{
+	if (keycode == KEY_T)
+		top_view(data);
+	else if (keycode == KEY_I)
+		iso(data);
+	else if (keycode == KEY_X)
+		data->angle_x += 0.04;
+	else if (keycode == KEY_Y)
+		data->angle_y += 0.04;
+	else if (keycode == KEY_Z)
+		data->angle_z += 0.04;
+	else if (keycode == KEY_P)
+		data->perspective = true;
+}
+
 int	keypress_handler(int keycode, t_fdf *data)
 {
 	printf("keycode -->%d\n", keycode);
-	if (keycode == Escape)
+	if (keycode == ESC)
 			close_win(data);
-	if (keycode == Up)
+	if (keycode == UP || keycode == KEY_W)
 		data->shift_y -= SHIFT;
-	else if (keycode == Down)
+	else if (keycode == DOWN || keycode == KEY_S)
 		data->shift_y += SHIFT;
-	else if (keycode == Left)
+	else if (keycode == LEFT || keycode == KEY_A)
 		data->shift_x -= SHIFT;
-	else if (keycode == Right)
+	else if (keycode == RIGHT || keycode == KEY_D)
 		data->shift_x += SHIFT;
-	else if (keycode == M_ZOOM)
+	else if (keycode == KEY_J)
 		zoom(data, ZOOM_STEP, STEP);
-	else if (keycode == N_UNZOOM)
+	else if (keycode == KEY_K)
 		zoom(data, -ZOOM_STEP, -STEP);
-	else if (keycode == 116)
-		top_view(data);
-	else if (keycode == 105)
-		iso(data);
-	else if (keycode == 106)
-		data->angle_x += 0.04;
-	else if (keycode == 107)
-		data->angle_y += 0.04;
-	else if (keycode == 108)
-		data->angle_z += 0.04;
-	else if (keycode == 112)
-		data->perspective = true;
+	else
+		continue_search(keycode, data);
 	ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
 	create_image(data);
 	return (0);

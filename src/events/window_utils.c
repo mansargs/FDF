@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:12:34 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:12:37 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:44:44 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "events.h"
 
 void	open_window(t_fdf *data, char *win_name)
 {
@@ -31,7 +33,7 @@ void	open_window(t_fdf *data, char *win_name)
 		exit(EXIT_FAILURE);
 	}
 	create_image(data);
-	mlx_hook(data->win, DestroyNotify, 0, close_win, data);
-	mlx_hook(data->win, KeyPress, KeyPressMask, keypress_handler, data);
+	mlx_hook(data->win, DESTROY, 0, close_win, data);
+	mlx_hook(data->win, KEY_PRESS, KEY_PRESS_MASK, keypress_handler, data);
 	mlx_loop(data->mlx);
 }

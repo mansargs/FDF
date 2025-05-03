@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 20:58:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:35:59 by mansargs         ###   ########.fr       */
+/*   Created: 2025/05/04 01:34:49 by mansargs          #+#    #+#             */
+/*   Updated: 2025/05/04 02:04:55 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef EVENTS_H
+# define EVENTS_H
 
-# include <errno.h>
-# include "../utils/utils.h"
-# include "../includes/defines.h"
+# include "../render/render.h"
 
-void	create_matrix(int fd, t_fdf *data);
-void	generate_point_matrix(t_fdf *data);
-bool	split_and_fill(t_z_clr *data, char *str);
+void	open_window(t_fdf *data, char *win_name);
+int		close_win(t_fdf *data);
+int		keypress_handler(int keycode, t_fdf *data);
 
 #endif

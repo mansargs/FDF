@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:02:21 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:03:38 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 02:00:10 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "render.h"
 
 void	rotate_x_axis(t_point *start, t_point *end, const t_fdf *data)
 {

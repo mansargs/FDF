@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:53:33 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 21:21:26 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:27:51 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "utils.h"
 
 static bool	valid_hex(const char *str)
 {

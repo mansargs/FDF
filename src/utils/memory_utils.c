@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 18:53:08 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 21:29:58 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 02:31:42 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "utils.h"
 
 void	free_split(char **arr)
 {
@@ -39,14 +41,11 @@ void	cleanup_matrix(t_z_clr	**matrix, int row)
 	}
 }
 
-void	safe_exit_from_file(int fd, char *line, int errno)
+void	safe_exit_from_file(int fd, char *line)
 {
 	free(line);
 	get_next_line(-1);
 	close(fd);
-	if (!errno)
-		ft_putendl_fd("Invalid characters in file", STDERR_FILENO);
-	else
-		perror("");
+	ft_putendl_fd("Invalid characters in file or memory problem", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }

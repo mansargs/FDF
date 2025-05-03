@@ -6,11 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:04:12 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:04:50 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 02:34:18 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	interpolate(int	color1, int color2, int cur_step, int tot_step)
+#include "render.h"
+
+static int	interpolate(int	color1, int color2, int cur_step, int tot_step)
 {
 	int		rgb1[3];
 	int		rgb2[3];
@@ -33,7 +35,7 @@ int	interpolate(int	color1, int color2, int cur_step, int tot_step)
 	return ((final_rgb[0] << 16) | (final_rgb[1] << 8) | final_rgb[2]);
 }
 
-void	init_bresenham_data(int *dif_and_dp, int *step, t_point *s, t_point *e)
+static void	init_bresenham_data(int *dif_and_dp, int *step, const t_point *s, const t_point *e)
 {
 	dif_and_dp[0] = abs(e->x - s->x);
 	dif_and_dp[1] = abs(e->y - s->y);

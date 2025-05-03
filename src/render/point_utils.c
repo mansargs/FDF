@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:10:05 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:10:48 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 01:57:51 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "render.h"
 
 static void	init_point(int y, int x, t_point *point, t_fdf *data)
 {

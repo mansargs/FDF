@@ -6,9 +6,11 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:00:27 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 19:01:59 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 02:12:54 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "render.h"
 
 void	top_view(t_fdf *data)
 {
@@ -43,11 +45,11 @@ void	isometric(t_point *start, t_point *end, t_fdf *data)
 	int	prev_x;
 
 	prev_x = start->x;
-	start->x = (start->x - start->y) * cos(M_PI / 6) + data->shift_x;;
-	start->y = (prev_x + start->y) * sin(M_PI / 6) - start->z+ data->shift_y;
+	start->x = (start->x - start->y) * cos(ANGLE_30) + data->shift_x;;
+	start->y = (prev_x + start->y) * sin(ANGLE_30) - start->z+ data->shift_y;
 	prev_x = end->x;
-	end->x = (end->x - end->y) * cos(M_PI / 6) + data->shift_x;
-	end->y = (prev_x + end->y) * sin(M_PI / 6) - end->z+ data->shift_y;
+	end->x = (end->x - end->y) * cos(ANGLE_30) + data->shift_x;
+	end->y = (prev_x + end->y) * sin(ANGLE_30) - end->z+ data->shift_y;
 }
 
 void	perspective(t_point *start, t_point *end)
