@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 18:10:11 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 02:51:06 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ typedef struct s_fdf
 	int			zoom;
 	bool		iso;
 	bool		top_view;
+	bool		rotate_x;
+	bool		rotate_y;
+	bool		rotate_z;
+	float		angle_x;
+	float		angle_y;
+	float		angle_z;
 	int			shift_y;
 	void		*mlx;
 	void		*win;
@@ -156,5 +162,9 @@ void	zoom(t_fdf * data, float zoom_delta, int step);
 void	change_z(t_fdf *data, int z_step);
 void	top_view(t_fdf *data);
 void	iso(t_fdf *data);
+
+void	rotate_x_axis(t_point *start, t_point *end, const t_fdf *data);
+void	rotate_y_axis(t_point *start, t_point *end, const t_fdf *data);
+void	rotate_z_axis(t_point *start, t_point *end, const t_fdf *data);
 
 #endif

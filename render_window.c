@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:35:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 18:11:16 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 02:53:23 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ void	initialize_points(int y, int x, t_fdf *data, int vertical)
 		init_point(y, x + 1, &end, data);
 	if (data->iso)
 		isometric(&start, &end, data);
+	rotate_x_axis(&start, &end, data);
+	rotate_y_axis(&start, &end, data);
+	rotate_z_axis(&start, &end, data);
 	bresenham(&start, &end, data);
 }
-
 
 void	draw_matrix(t_fdf *data)
 {
@@ -94,6 +96,12 @@ int	keypress_handler(int keycode, t_fdf *data)
 		top_view(data);
 	else if (keycode == 105)
 		iso(data);
+	else if (keycode == 106)
+		data->angle_x += 0.04;
+	else if (keycode == 107)
+		data->angle_y += 0.04;
+	else if (keycode == 108)
+		data->angle_z += 0.04;
 	ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
 	create_image(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:37:59 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/02 17:35:44 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/03 02:59:26 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,8 @@ void	determine_color_depends_z(t_point *point)
 	{
 		if (!point->z)
 			point->color = 0xffffff;
-		else if (point->z <= 40 && point->z > 0)
-			point->color = 0xc68642;
-		else if (point->z > 40)
-			point->color = 0x8d5524;
-		else if (point->z < 0 && point->z >= -40)
-			point->color = 0xf1c27d;
 		else
-			point->color = 0xe0ac69 ;
+			point->color = 0x851e3e;
 	}
 }
 

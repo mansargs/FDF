@@ -15,7 +15,7 @@ HEADER = -I$(LIBFT) -I$(GNL) -I. -I$(MLX)
 
 SRC = $(GNL)/get_next_line.c $(GNL)/get_next_line_utils.c \
 		fdf.c validation.c matrix.c cleaning_functions.c \
-		render_window.c draw_utils.c move.c
+		render_window.c draw_utils.c move.c rotation.c
 
 OBJ = $(SRC:.c=.o)
 
