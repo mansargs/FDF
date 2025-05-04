@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:36 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 14:57:12 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:21:54 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static void	continue_search(int	keycode, t_fdf *data)
 		top_view(data);
 	else if (keycode == KEY_I)
 		iso(data);
-	else if (keycode == KEY_X)
+	else if (keycode == KEY_X && !data->perspective)
 		data->angle_x += 0.04;
-	else if (keycode == KEY_Y)
+	else if (keycode == KEY_Y && !data->perspective)
 		data->angle_y += 0.04;
 	else if (keycode == KEY_Z)
 		data->angle_z += 0.04;
@@ -45,7 +45,6 @@ static void	continue_search(int	keycode, t_fdf *data)
 
 int	keypress_handler(int keycode, t_fdf *data)
 {
-	printf("keycode -->%d\n", keycode);
 	if (keycode == ESC)
 			close_win(data);
 	if (keycode == UP || keycode == KEY_W)
