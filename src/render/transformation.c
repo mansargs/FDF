@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:02:21 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:00:10 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:04:40 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,19 @@ void	zoom(t_fdf *data, float zoom_delta, int step_delta)
 		if (data->step < 1)
 			data->step = 1;
 	}
+}
+
+void	reset_all_changing(t_fdf *data)
+{
+	data->step = 30;
+	data->zoom = 3;
+	data->iso = true;
+	data->shift_x = WIN_WIDTH / 2;
+	data->shift_y = WIN_HEIGHT / 4;
+	data->iso = true;
+	data->top_view = false;
+	data->perspective = false;
+	data->angle_x = 0.0;
+	data->angle_y = 0.0;
+	data->angle_z = 0.0;
 }

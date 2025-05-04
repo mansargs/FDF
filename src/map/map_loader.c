@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:32:43 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:10:21 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void	fill_matrix(char **split, t_fdf *data)
 			cleanup_matrix(data->matrix, data->height);
 			free_split(split);
 			get_next_line(-1);
-			ft_putendl_fd("Problem with the memory or invalid content",
-				STDERR_FILENO);
+			if (errno == 0)
+				ft_putendl_fd("Invalid content", STDERR_FILENO);
+			else
+				perror("");
 			exit(EXIT_FAILURE);
 		}
 		++i;

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:36 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 01:49:10 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:57:12 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	continue_search(int	keycode, t_fdf *data)
 		data->angle_z += 0.04;
 	else if (keycode == KEY_P)
 		data->perspective = true;
+	else if (keycode == KEY_R)
+		reset_all_changing(data);
 }
 
 int	keypress_handler(int keycode, t_fdf *data)

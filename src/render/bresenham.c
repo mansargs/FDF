@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:04:12 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:34:18 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:40:15 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	bresenham(t_point *start, t_point *end, t_fdf *data)
 	int	dif_and_dp[4];
 	int	step[4];
 
+	//printf("start ----> (%d, %d)\n end ------>(%d, %d)\n", start->x, start->y, end->x, end->y);
 	init_bresenham_data(dif_and_dp, step, start, end);
 	while (1)
 	{

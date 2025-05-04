@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:51:43 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:34:25 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:05:00 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	rotate_z_axis(t_point *start, t_point *end, const t_fdf *data);
 void	zoom(t_fdf *data, float zoom_delta, int step_delta);
 
 // Projection
+void	reset_all_changing(t_fdf *data);
 void	top_view(t_fdf *data);
 void	iso(t_fdf *data);
 void	perspect(t_fdf *data);
