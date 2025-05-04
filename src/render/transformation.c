@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:02:21 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 15:04:40 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:01:19 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	rotate_x_axis(t_point *start, t_point *end, const t_fdf *data)
 	end->z = prev_y * sin(data->angle_x) + end->z * cos(data->angle_x);
 }
 
-void rotate_y_axis(t_point *start, t_point *end, const t_fdf *data)
+void	rotate_y_axis(t_point *start, t_point *end, const t_fdf *data)
 {
-	float prev_x;
+	float	prev_x;
 
 	prev_x = start->x;
 	start->x = start->x * cos(data->angle_y) + start->z * sin(data->angle_y);
@@ -36,7 +36,7 @@ void rotate_y_axis(t_point *start, t_point *end, const t_fdf *data)
 	end->z = -prev_x * sin(data->angle_y) + end->z * cos(data->angle_y);
 }
 
-void rotate_z_axis(t_point *start, t_point *end, const t_fdf *data)
+void	rotate_z_axis(t_point *start, t_point *end, const t_fdf *data)
 {
 	float	prev_x;
 	float	prev_y;
@@ -53,7 +53,7 @@ void rotate_z_axis(t_point *start, t_point *end, const t_fdf *data)
 
 void	zoom(t_fdf *data, float zoom_delta, int step_delta)
 {
-	if (data->zoom +zoom_delta != 0 && data->zoom + zoom_delta != 10)
+	if (data->zoom + zoom_delta != 0 && data->zoom + zoom_delta != 10)
 	{
 		data->zoom += zoom_delta;
 		if (data->zoom < 1)

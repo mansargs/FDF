@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:24:46 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:45:17 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:33:49 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
@@ -26,7 +27,7 @@
 // Memory utils
 void	free_split(char **arr);
 void	cleanup_matrix(t_z_clr	**matrix, int row);
-void	safe_exit_from_file(int fd, char *line);
+void	safe_exit_from_file(int fd, char *line, bool format);
 
 // Validation utils
 

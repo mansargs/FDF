@@ -6,13 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:43:49 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:22:42 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:55:53 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-#include "events/events.h"
+# include "events/events.h"
 
 #endif

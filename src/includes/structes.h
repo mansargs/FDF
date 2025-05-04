@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:47:46 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/03 21:08:59 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:02:10 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_point
 typedef struct s_fdf
 {
 	t_z_clr		**matrix;
-	
 	int			height;
 	int			width;
 	int			step;

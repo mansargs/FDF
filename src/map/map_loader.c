@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 14:10:21 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:34:22 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	fill_matrix(char **split, t_fdf *data)
 	i = 0;
 	while (i < data->height)
 	{
-
 		len = ft_strlen(split[i]);
 		if (len > 0 && split[i][len - 1] == '\n')
 			split[i][len - 1] = '\0';
@@ -46,7 +45,7 @@ static void	read_file_from_line(char *file_lines, t_fdf *data)
 
 	split = ft_split(file_lines, '\n');
 	free(file_lines);
-	if(!split)
+	if (!split)
 	{
 		perror("");
 		exit(errno);
@@ -60,12 +59,13 @@ static void	read_file_from_line(char *file_lines, t_fdf *data)
 	fill_matrix(split, data);
 }
 
-static void	count_width_height(char *line, t_fdf *data, int fd, char **file_lines)
+static void	count_width_height(char *line, t_fdf *data, int fd,
+		char **file_lines)
 {
 	int	words;
 
 	if (invalid_character(line))
-		safe_exit_from_file(fd, line);
+		safe_exit_from_file(fd, line, 1);
 	++data->height;
 	words = count_words(line, ' ');
 	if (words > data->width)
@@ -73,7 +73,7 @@ static void	count_width_height(char *line, t_fdf *data, int fd, char **file_line
 	*file_lines = ft_gnl_strjoin(*file_lines, line);
 	if (!*file_lines)
 	{
-		safe_exit_from_file(fd, line);
+		safe_exit_from_file(fd, line, 1);
 		exit(errno);
 	}
 	free(line);
@@ -90,12 +90,18 @@ static char	*read_file_lines(int fd, t_fdf *data)
 		perror("");
 		exit(errno);
 	}
+	line = get_next_line(fd);
+	if (!line || line[0] == '\n')
+	{
+		free(file_lines);
+		safe_exit_from_file(fd, line, 0);
+	}
 	while (1)
 	{
+		count_width_height(line, data, fd, &file_lines);
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		count_width_height(line, data, fd, &file_lines);
 	}
 	close(fd);
 	return (file_lines);
@@ -108,7 +114,3 @@ void	create_matrix(int fd, t_fdf *data)
 	file_lines = read_file_lines(fd, data);
 	read_file_from_line(file_lines, data);
 }
-
-
-
-

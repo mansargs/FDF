@@ -6,14 +6,13 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:58:22 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 02:35:59 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:30:24 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
 
-# include <errno.h>
 # include "../utils/utils.h"
 # include "../includes/defines.h"
 

@@ -6,21 +6,20 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:08:43 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 14:09:37 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:58:25 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-
 static void	default_colors(int *color, int z)
 {
 	if (z > 0)
-			*color = 0x005b96;
+		*color = 0x005b96;
 	else if (z < 0)
-			*color = 0x851e3e;
+		*color = 0x851e3e;
 	else
-			*color = 0x83d0c9;
+		*color = 0x83d0c9;
 }
 
 static void	fill_into_color(int	*color, int z, const char *hex)

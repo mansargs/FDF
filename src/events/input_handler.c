@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:36 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 15:21:54 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:06:13 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	close_win(t_fdf *data)
 	exit(EXIT_SUCCESS);
 }
 
-static void	continue_search(int	keycode, t_fdf *data)
+static void	continue_search(int keycode, t_fdf *data)
 {
 	if (keycode == KEY_T)
 		top_view(data);
@@ -46,7 +46,7 @@ static void	continue_search(int	keycode, t_fdf *data)
 int	keypress_handler(int keycode, t_fdf *data)
 {
 	if (keycode == ESC)
-			close_win(data);
+		close_win(data);
 	if (keycode == UP || keycode == KEY_W)
 		data->shift_y -= SHIFT;
 	else if (keycode == DOWN || keycode == KEY_S)
