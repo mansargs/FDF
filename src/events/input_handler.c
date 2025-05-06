@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:13:36 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 17:06:13 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:49:36 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	keypress_handler(int keycode, t_fdf *data)
 		zoom(data, -ZOOM_STEP, -STEP);
 	else
 		continue_search(keycode, data);
-	ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
-	create_image(data);
+	data->redraw = true;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 18:34:22 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:46:47 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	read_file_from_line(char *file_lines, t_fdf *data)
 	}
 	data->step = 30;
 	data->zoom = 3;
+	data->redraw = false;
 	data->iso = true;
 	data->shift_x = WIN_WIDTH / 2;
 	data->shift_y = WIN_HEIGHT / 4;

@@ -6,11 +6,22 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:12:34 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 17:05:34 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:51:54 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "events.h"
+
+static int	render_loop(t_fdf *data)
+{
+	if (data->redraw)
+	{
+		ft_bzero(data->img.addr, data->img.line_length * WIN_HEIGHT);
+		create_image(data);
+		data->redraw = false;
+	}
+	return (0);
+}
 
 void	open_window(t_fdf *data, char *win_name)
 {
@@ -35,5 +46,6 @@ void	open_window(t_fdf *data, char *win_name)
 	create_image(data);
 	mlx_hook(data->win, DESTROY, 0, close_win, data);
 	mlx_hook(data->win, KEY_PRESS, 1L << 0, keypress_handler, data);
+	mlx_loop_hook(data->mlx, render_loop, data);
 	mlx_loop(data->mlx);
 }

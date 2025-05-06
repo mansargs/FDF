@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:47:46 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 17:02:10 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:45:34 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_fdf
 	int			step;
 	int			shift_x;
 	int			zoom;
+	bool		redraw;
 	bool		iso;
 	bool		top_view;
 	bool		perspective;
