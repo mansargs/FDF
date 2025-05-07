@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/07 20:32:54 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/07 21:14:56 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*read_file_lines(int fd, t_fdf *data)
 		exit(errno);
 	}
 	line = get_next_line(fd);
-	if (!line || line[0] == '\n')
+	if (!line)
 	{
 		free(file_lines);
 		safe_exit_from_file(fd, line, 0);
