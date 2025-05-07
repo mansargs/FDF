@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 20:45:35 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 17:05:14 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/07 19:25:58 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define ZOOM_STEP 0.2
 # define CHANGE_Z 5
 # define ANGLE_30 0.5235987
-# define FOCAL 1000
+# define FOCAL 5000
 # define ESC 65307
 # define UP 65362
 # define DOWN 65364
