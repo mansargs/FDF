@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 19:05:50 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/06 22:46:47 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:32:54 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 static void	fill_matrix(char **split, t_fdf *data)
 {
 	int		i;
-	size_t	len;
 
 	i = 0;
-	while (i < data->height)
+	while (split[i])
 	{
-		len = ft_strlen(split[i]);
-		if (len > 0 && split[i][len - 1] == '\n')
-			split[i][len - 1] = '\0';
 		if (!split_and_fill(data->matrix[i], split[i]))
 		{
 			cleanup_matrix(data->matrix, data->height);

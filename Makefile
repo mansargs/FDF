@@ -3,7 +3,7 @@ MAKEFLAGS += --no-print-directory
 NAME = fdf
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
 
 RM = rm -f
 
@@ -34,7 +34,7 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)/libft.a $(MLX)/libmlx.a $(OBJ) $()
+$(NAME): $(LIBFT)/libft.a $(MLX)/libmlx.a $(OBJ) $(INCLUDES)
 	@echo "🔗 Linking objects and creating $(NAME)..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT) -lft -L$(MLX) -lmlx -lXext -lX11 -lm -lz
 	@echo "✅ Build complete: $(NAME)"
@@ -49,7 +49,7 @@ $(MLX)/libmlx.a:
 	@$(MAKE) -C $(MLX) > /dev/null 2>&1
 
 %.o: %.c
-	@echo "⚙️  Compiling $<..."
+	@echo "⚙️  Compiling ..."
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:

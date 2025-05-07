@@ -6,7 +6,7 @@
 /*   By: mansargs <mansargs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 01:24:46 by mansargs          #+#    #+#             */
-/*   Updated: 2025/05/04 18:33:49 by mansargs         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:18:37 by mansargs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <string.h>
 # include "../includes/structes.h"
 # include "../../library/libft/libft.h"
